@@ -2,7 +2,7 @@ import random as rn
 from arts import *
 from words import word_list
 
-print(logo)
+print(logo) # In arts.py
 
 used_letters = []
 
@@ -10,7 +10,7 @@ no_of_guesses = 6
 
 display = []
 
-chosen_word = rn.choice(word_list) # To pick a random element from list
+chosen_word = rn.choice(word_list) # To pick a random element from list ,The words in words.py
 
 # print(f"The chosen word is {chosen_word} ")
 
@@ -32,7 +32,7 @@ while "_" in display and no_of_guesses >= 0:
     else:
         used_letters.append(guess)
         print(f"You guessed {guess}, that's not in the word, you lose a life.")
-        print(stages[no_of_guesses])
+        print(stages[no_of_guesses]) #The stages in arts.py
         no_of_guesses -=1
 
 if no_of_guesses >= 0:
