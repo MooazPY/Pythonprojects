@@ -41,7 +41,7 @@ def check_card(cardnumber):
                 checker1 = str(mb)
                 checker2 = len(checker1)
                 while checker2 == 2:
-                    if mb == 51 or mb == 52 or mb == 53 or mb == 54 or  mb == 55:
+                    if mb >= 51 or mb <=55:
                         print("Your Card Type Is MASTERCARD")
                         sys.exit()
                     elif mb//10 == 4:
