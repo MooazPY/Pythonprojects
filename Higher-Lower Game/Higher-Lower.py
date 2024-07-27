@@ -37,13 +37,8 @@ def play_game():
     score = 0
     fam1 = generate_random_famous() 
     while Flag:
-        #Get the 2 generated famous persons from the data list
-        # fam1,fam2 = generate_random_famous() 
+
         fam2 = generate_random_famous()
-        
-        #Get thier score
-        # fam1_score = get_famous_score(fam1)
-        # fam2_score = get_famous_score(fam2)
         
         show_famous_data(fam1,fam2)
         
