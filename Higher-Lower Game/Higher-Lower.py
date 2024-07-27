@@ -49,7 +49,7 @@ def play_game():
         else:
             print(f"Sorry, that's wrong. Final score: {score}")
             Flag = False
-        
+        fam1 = fam2
         
 
 
