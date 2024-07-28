@@ -49,7 +49,7 @@ def play_game():
 
         fam2 = generate_random_famous()
 
-        if fam1 == fam2:
+        while fam1 == fam2:
             fam2 = generate_random_famous()
         
         show_famous_data(fam1,fam2)
