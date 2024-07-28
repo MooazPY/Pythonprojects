@@ -10,14 +10,23 @@ def generate_random_famous():
     return famous
 
 def get_famous_score(famous):
+    """Return number of followers of the random famous person"""
     return famous["follower_count"]
 
 def show_famous_data(famous1,famous2):
-    print(f"Compare A: {famous1['name']}, {famous1['description']}, from {famous1['country']}")
+    """Show the famous data from our data list"""
+    famous1_name = famous1['name']
+    famous1_desc = famous1['description']
+    famous1_country = famous1['country']
+    print(f"Compare A: {famous1_name}, {famous1_desc}, from {famous1_country}")
     print(vs)
-    print(f"Against B: {famous2['name']}, {famous2['description']}, from {famous2['country']}")
+    famous2_name = famous2['name']
+    famous2_desc = famous2['description']
+    famous2_country = famous2['country']
+    print(f"Against B: {famous2_name}, {famous2_desc}, from {famous2_country}")
 
 def check_winner(famous1,famous2,user_guess):
+    """Check is user's answer is correct or not"""
     if user_guess.upper() == 'A':
         user_guess = famous1
         if get_famous_score(user_guess) > get_famous_score(famous2):
