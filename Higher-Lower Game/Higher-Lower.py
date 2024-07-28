@@ -24,12 +24,14 @@ def check_winner(famous1,famous2,user_guess):
             return 1
         else:
             return 0
-    else:
+    elif user_guess.upper() == 'B':
         user_guess = famous2
         if get_famous_score(user_guess) > get_famous_score(famous1):
             return 1
         else:
             return 0
+    else:
+        return 0
 
 def play_game():
     print(logo)
