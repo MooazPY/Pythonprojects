@@ -3,10 +3,8 @@ import random
 from Game_Arts import *
 
 def generate_random_famous():
-    """Gets two random famous persons from our data list"""
-    for i in range(1):
-        famous = data[random.randint(0,len(data) - 1)]
-        data.remove(famous)
+    """Gets random famous persons from our data list"""
+    famous = random.choice(data)
     return famous
 
 def get_famous_score(famous):
@@ -50,6 +48,9 @@ def play_game():
     while Flag:
 
         fam2 = generate_random_famous()
+
+        if fam1 == fam2:
+            fam2 = generate_random_famous()
         
         show_famous_data(fam1,fam2)
         
