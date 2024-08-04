@@ -28,7 +28,7 @@ while game_is_on:
     
     # Check if collision with car happend
     for car in new_car.list_cars:
-        if user_player.distance(car) < 20 or (user_player.xcor() == car.xcor() and user_player.ycor() == car.ycor()) :
+        if user_player.distance(car) < 20:
             game_is_on = False
             score.game_over()
     
