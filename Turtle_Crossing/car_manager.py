@@ -9,18 +9,19 @@ CARS_COLOR  = ["orange","red","green","blue","purple","yellow"]
 
 class CarManager(Turtle):
     def __init__(self):
-        # super().__init__()
         self.list_cars = []
         self.car_speed = CAR_DIS
         self.move()
     
     
     def move(self):
+        """Let the cars move"""
         for car in self.list_cars:
             car.forward(self.car_speed)
     
     
     def create_car(self):
+        """Basically create a car with random color and also position"""
         random_chance = random.randint(1,4)
         if random_chance == 1:
             for i in range(1):
@@ -36,6 +37,7 @@ class CarManager(Turtle):
             
     
     def increase_speed(self):
+        """Just increase the speed of the cars when the turtle cross the road"""
         self.car_speed += DIS_INC
         self.move()
 
