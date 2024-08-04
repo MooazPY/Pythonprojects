@@ -14,14 +14,17 @@ class Player(Turtle):
         self.goto(INIT_POS)
         
     def up(self):
+        """Let you to control the turtle up only"""
         if self.ycor() < WIN_LINE:
             self.forward(MOVE_DISTANCE)
         
         
     def check_win(self):
+        """return true if the turtle cross the road"""
         if self.ycor() >= WIN_LINE:
             return 1
     
     
     def reset(self):
+        """Set the position of the turtle to the first position when he cross the road"""
         self.goto(INIT_POS)
