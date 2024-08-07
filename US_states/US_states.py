@@ -35,7 +35,7 @@ while game_is_on:
 
         if user_answers.lower() == 'stop':
                 game_is_on = False
-                with open("missed_states","w") as miss:
+                with open("missed_states","w") as miss:# If you lose will make a file with missed states
                         for missed in states:
                                 miss.write(f'{missed}\n')
         answer.goto(0,0)
