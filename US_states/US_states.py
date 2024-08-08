@@ -9,7 +9,6 @@ screen.title("US-STATES")
 data = pd.read_csv(r'C:/Users/makka\Desktop/50_states.csv')
 states = data['state'].to_list()
 state_axis = list(zip(data['x'],data['y']))
-# already_guessed = []
 
 answer = Turtle()
 answer.penup()
