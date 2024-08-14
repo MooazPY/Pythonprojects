@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 import random
+import pyperclip
 
 # Create the window
 window = Tk()
@@ -63,6 +64,7 @@ def generate():
         password += char
         
     password_entry.insert(0,password)
+    pyperclip.copy(password) # to copy password to the clipboard
     
 
 # Add functionality
