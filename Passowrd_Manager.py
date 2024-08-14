@@ -33,11 +33,12 @@ email_entry = Entry(width=35)
 email_entry.place(x=150,y=240)
 email_entry.insert(0, "example@example.com")
 
-password_entry = Entry(width=21)
+password_entry = Entry(width=21) # use show method to show * other than than real password
 password_entry.place(x=150,y=280)
 
 # Generate Functionality
 def generate():
+    """Generate a random password for the user"""
     
     password_entry.delete(0,END)
 
@@ -66,6 +67,8 @@ def generate():
 
 # Add functionality
 def add():
+    """Add the website and its email and password in a file to save it"""
+
     if len(email_entry.get()) == 0 or len(web_entry.get()) == 0 or len(password_entry.get()) == 0:
         messagebox.showwarning(title="oops",message="Please don't leave any fields empty!")
     else:
