@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 import random
-import pyperclip
+import json
 
 # Create the window
 window = Tk()
@@ -34,13 +34,13 @@ email_entry = Entry(width=35)
 email_entry.place(x=150,y=240)
 email_entry.insert(0, "example@example.com")
 
-password_entry = Entry(width=21) # use show method to show * other than than real password
+password_entry = Entry(width=21) # To show * except the password use show method
 password_entry.place(x=150,y=280)
+
 
 # Generate Functionality
 def generate():
     """Generate a random password for the user"""
-    
     password_entry.delete(0,END)
 
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -64,22 +64,50 @@ def generate():
         password += char
         
     password_entry.insert(0,password)
-    pyperclip.copy(password) # to copy password to the clipboard
-    
+
 
 # Add functionality
 def add():
     """Add the website and its email and password in a file to save it"""
-
+    new_data = {
+        web_entry.get():{
+            "email":email_entry.get(),
+            "password":password_entry.get(),
+        }
+    }
+    
+    
     if len(email_entry.get()) == 0 or len(web_entry.get()) == 0 or len(password_entry.get()) == 0:
         messagebox.showwarning(title="oops",message="Please don't leave any fields empty!")
     else:
-            yes_no = messagebox.askokcancel(f"{web_entry.get()}",message=f"The email : {email_entry.get()}\nThe password : {password_entry.get()}\nIs it okay to add?")
-            if yes_no:
-                with open ("password.txt","a") as file:
-                    file.write(f"{web_entry.get()} | {email_entry.get()} | {password_entry.get()}\n")
-                    web_entry.delete(0,END)
-                    password_entry.delete(0,END)
+        try:
+            with open ("pass.json","r") as file:
+                data = json.load(file)
+        except FileNotFoundError:
+            with open("pass.json","w") as file:
+                json.dump(new_data,file,indent=4)
+        else:
+            data.update(new_data)
+            with open("pass.json","w") as file:
+                json.dump(data,file,indent=4)
+            web_entry.delete(0,END)
+            password_entry.delete(0,END)
+
+# Search Functionality
+def search():
+    """Search if the specific website is in JSON file or not"""
+    with open("pass.json") as file:
+        data = json.load(file)
+        mails = [mail for mail in data]
+
+    if web_entry.get() in mails:
+        with open("pass.json","r") as file:
+            data = json.load(file)
+            password_get = data[web_entry.get()]["password"]
+            mail_get = data[web_entry.get()]["email"]
+        messagebox.showinfo(f"{web_entry.get()}",message=f"Email: {mail_get}\nPassword: {password_get}")
+    else:
+        messagebox.showerror(f"{web_entry.get()} Not Found",message=f"There is no website called {web_entry.get()} in file")
 
 
 # Buttons
@@ -89,6 +117,9 @@ generate_button.place(x=280,y=280)
 add_button = Button(text="Add",command=add)
 add_button.place(x=150,y=310)
 add_button.config(width=34)
+
+search_button = Button(text="Search",width=10,command=search)
+search_button.place(x=370,y=205)
 
 
 window.mainloop()
