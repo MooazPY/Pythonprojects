@@ -25,13 +25,7 @@ canvas.place(x=45,y=60)
 
 # Button Functionality
 def true():
-    # q = qs.display_question() 
-    # canvas.itemconfig(ques_text,text=f'{q}')    
-    # window.update()
     if qs.end():
-        # q = qs.display_question() 
-        # canvas.itemconfig(ques_text,text=f'{q}')
-        # window.update()
         time.sleep(3)
         window.destroy()
         return
@@ -49,22 +43,13 @@ def true():
         canvas.itemconfig(ques_text,text=f'{q}')
     window.update()
     if qs.end():
-        # q = qs.display_question() 
-        # canvas.itemconfig(ques_text,text=f'{q}')
-        # window.update()
         time.sleep(3)
         window.destroy()
         return
 
 
 def false():
-    # q = qs.display_question() 
-    # canvas.itemconfig(ques_text,text=f'{q}')    
-    # window.update()
     if qs.end():
-        # q = qs.display_question() 
-        # canvas.itemconfig(ques_text,text=f'{q}')
-        # window.update()
         time.sleep(3)
         window.destroy()
         return
@@ -82,24 +67,9 @@ def false():
         canvas.itemconfig(ques_text,text=f'{q}')
     window.update()
     if qs.end():
-        # q = qs.display_question() 
-        # canvas.itemconfig(ques_text,text=f'{q}')
-        # window.update()
         time.sleep(3)
         window.destroy()
         return
-
-
-# def check_end():
-#     if qs.end():
-#         canvas.itemconfig(ques_text,text="NO MORE QUESTIONS")
-#         window.update()
-#         time.sleep(3)
-#         window.destroy()
-
-
-
-
 
 # Label
 score_label = Label(text=f"Score: {qs.score}",background=THEME_COLOR,fg="White",font=('Ariel',10,'bold'))
