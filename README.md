@@ -3,7 +3,7 @@ CS Student | Major in Computer Science. I'm interested in Machine Learning and A
 Skills: Python - C++ - Math
 
 Tech Skills:
-💻   PYTHON, Pandas, Numpy, Tkinter, Turtle
+💻   PYTHON, Pandas, Numpy, Tkinter, Turtle, Requests
 
 🌐   HTML5, CSS, FLASK 
 
