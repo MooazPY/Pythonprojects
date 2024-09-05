@@ -1,13 +1,13 @@
 import requests
 import datetime
 
+# To let your sheety data secured 
+BEARER_AUTH = "__Your Authentication key from sheety__"
 
-BEARER_AUTH = "zxcvbnmasdfghjklqwertyuiop"
 
-
-# THE INFO
-API_KEY = "eae5d9c16a1d7088c204cfb4b7d11462"
-APP_ID = "5e39d792"
+# Nutritionix Data
+API_KEY = "__Your Api key from Nutritionix api__"
+APP_ID = "__App id from Nutritionix also__"
 GENDER = "male"
 AGE = "21"
 
@@ -21,7 +21,7 @@ current_time = time.strftime("%X")
 # MAIN WORK
 user_input = input("Tell me which exercises you did : ")
 
-
+# Nutritionix endpiont
 ai_endpoint = "https://trackapi.nutritionix.com/v2/natural/exercise"
 
 
