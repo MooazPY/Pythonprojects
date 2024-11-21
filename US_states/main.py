@@ -3,10 +3,10 @@ import pandas as pd
 
 screen = Screen()
 screen.setup(725,491)
-screen.bgpic(r'C:/Users/makka\Desktop\blank_states_img.gif')
+screen.bgpic(r'YOUR_PIC_FOR_BACKGROUND')
 screen.title("US-STATES")
 
-data = pd.read_csv(r'C:/Users/makka\Desktop/50_states.csv')
+data = pd.read_csv(r'YOUR_CSV_FILE_PATH')
 states = data['state'].to_list()
 state_axis = list(zip(data['x'],data['y']))
 
