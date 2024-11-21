@@ -15,7 +15,7 @@ Films_Titles = [name.getText() for name in Soup.find_all(name="h3",class_="title
 Films_Titles.reverse()
 
 
-with open("movies2.txt","w",encoding="utf-8") as file:
+with open("movies.txt","w",encoding="utf-8") as file:
     for i in range(len(Films_Titles)):
         file.write(f"{Films_Titles[i]}\n")
         
