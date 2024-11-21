@@ -1,6 +1,8 @@
 import requests 
 from bs4 import BeautifulSoup
 
+# Scraping Data from Hacker news website 
+
 response = requests.get("https://news.ycombinator.com/news")
 
 w = response.text
@@ -22,10 +24,10 @@ for title in whole_title:
 
     
 # For Upvotes  
-
+# Another Method to Get Data from site using list comperhension
 # upvotes = [int(score.getText().split()[0]) for score in soup.find_all(name="span",class_="score")]
+
 score = soup.find_all(name="span",class_="score")
-# print(score.getText())
 for scores in range(len(score)):
     num = score[scores].getText().split()[0]
     upvotes.append(int(num))
