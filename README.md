@@ -11,4 +11,4 @@ Tech Skills:
 
 ⚙️  GitHub
 
-🔧  Visual Studio, Code PyCharm, jupyter notebook 
+🔧  Visual Studio, PyCharm, jupyter notebook 
