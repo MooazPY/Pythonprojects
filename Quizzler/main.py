@@ -116,11 +116,11 @@ def sec_window():
     score_label.place(x=270,y=20)
 
     # Buttons
-    true_pic = PhotoImage(file=r"C:/Users/makka\Desktop/CS/images/true.png")
+    true_pic = PhotoImage(file="./true.png")
     true_button = Button(image=true_pic,highlightthickness=0,command=true)
     true_button.place(x=60,y=380)
 
-    false_pic = PhotoImage(file=r"C:/Users/makka\Desktop/CS/images/false.png")
+    false_pic = PhotoImage(file="./false.png")
     false_button = Button(image=false_pic,highlightthickness=0,command=false)
     false_button.place(x=230,y=380)
 
