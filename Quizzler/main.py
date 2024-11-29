@@ -10,8 +10,8 @@ dict_of_questions = Questions.questions
 # Quiz Brain
 qs = QuizBrain(dict_of_questions)
 
+# First Window
 def first_window():
-    # First Window
     window_f = Tk()
     window_f.title("Sign Up")
     window_f.minsize(300,200)
@@ -46,7 +46,8 @@ def first_window():
 
 
     window_f.mainloop()
-    
+
+# Second Window
 def sec_window():
 
     window = Tk()
