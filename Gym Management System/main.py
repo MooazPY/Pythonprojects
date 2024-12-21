@@ -40,7 +40,7 @@ def main():
 def add_for_trainer():
     
     canvas = Canvas(width=400,height=600,background='#2A2A2A')
-    text = canvas.create_text(210,30,text=f"ADD PAGE",font=("wide",25,"bold"),width=250,fill='white',justify="center")
+    text = canvas.create_text(210,30,text=f"ADD TRAINER",font=("wide",25,"bold"),width=250,fill='white',justify="center")
     canvas.place(x=95,y=60)
     # ID
     id_label = Label(text="ID : ",background="#2A2A2A",foreground="white",font=("wide",15,"bold"),justify="left")
@@ -121,7 +121,7 @@ def delete():
 def add_for_client():
     
     canvas = Canvas(width=400,height=600,background='#2A2A2A')
-    text = canvas.create_text(210,30,text=f"ADD PAGE",font=("wide",25,"bold"),width=250,fill='white',justify="center")
+    text = canvas.create_text(210,30,text=f"ADD CLIENT",font=("wide",25,"bold"),width=250,fill='white',justify="center")
     canvas.place(x=95,y=60)
     # ID
     id_label = Label(text="ID : ",background="#2A2A2A",foreground="white",font=("wide",15,"bold"),justify="left")
