@@ -5,7 +5,7 @@ import random
 
 
 
-dis_token = "MTM1MTk1NDY4MzE2NTQwOTMzMg.Gg_izF.drbnizkWKbWLO9Xb-Uc2Juj-JV7PAysx8Y4pIg"
+dis_token = "----------YOUR DISCORD TOKEN----------"
 
 def get_random_page():
     
