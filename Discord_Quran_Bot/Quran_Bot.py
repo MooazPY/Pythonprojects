@@ -7,7 +7,7 @@ import random
 
 dis_token = "----------YOUR DISCORD TOKEN----------"
 
-def get_random_page():
+def get_random_page():#GET RANDOM PAFE FROM ONLINE WEBSITE ((YOU CAN SCRAPE IT ALSO))
     
     random_num = random.randint(1,604)
     
@@ -22,18 +22,18 @@ def get_random_page():
 
 
 class MyClient(discord.Client):
-  async def on_ready(self):
+  async def on_ready(self):# CHECK IF IT'S LOGGEN IN SUCCESSFULLY
     print('Logged on as {0}!'.format(self.user))
 
   async def on_message(self, message):
     if message.author == self.user:
       return
-    if message.content.startswith('$quran'):
+    if message.content.startswith('$quran'): # IF USERS TYPED $quran SO THE BOT STARTS DYNAMICALLY SENT A RANDOM PAGE OF THE QURAN
         await message.channel.send("الورد اليومي ")
         await message.channel.send(get_random_page())
 
 
-intents = discord.Intents.default()
+intents = discord.Intents.default() # SET THE DEFAULT SETTING OF TJE BOT ((SENDING MESSAGES))
 intents.message_content = True
 
 client = MyClient(intents=intents)
