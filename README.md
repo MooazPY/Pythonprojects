@@ -5,8 +5,6 @@ Skills: Python - C++ - Math
 Tech Skills:
 💻   PYTHON, Pandas, Numpy, Tkinter, Turtle, Requests
 
-🌐   HTML5, CSS, FLASK 
-
 🛢   MySQL
 
 ⚙️  GitHub
