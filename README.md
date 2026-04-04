@@ -1,9 +1,8 @@
-CS Student | Major in Computer Science. I'm interested in Machine Learning and Artificial Intelligence . I'm Also Willing To learn And Improve My Skills
+CS Student | Major in Computer Science. I'm interested in Artificial Intelligence & Back End . I'm Also Willing To learn And Improve My Skills
 
 Skills: Python
 
-Tech Skills:
-💻   PYTHON, Pandas, Numpy, Tkinter, Turtle, Requests, etc
+💻Frameworks: Flask, Pandas, Numpy, Matplotlib, TKinter, BeautifulSoup
 
 🛢   MySQL
 
