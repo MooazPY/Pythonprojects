@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile - Liver Care</title>
+<meta name="author" content="Liver Care">
+
+<!-- FAVICON -->
+<link href="ico/favicon.png" rel="shortcut icon">
+
+<!-- CSS -->
+<link href="/static/css/ionicons.min.css" rel="stylesheet">
+<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+<link href="/static/css/style.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="/static/css/shared.css" rel="stylesheet">
+
+<style>
+/* All your existing CSS remains exactly the same */
+.profile-section {
+  padding: 60px 0;
+  background: #f8fafc;
+}
+
+/* ── Profile Layout ── */
+.profile-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+/* ── Left: User Card ── */
+.user-card {
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  border: 1px solid rgba(0,0,0,0.04);
+}
+
+.user-card-banner {
+  height: 90px;
+  background: linear-gradient(135deg, #1B3C53 0%, #0ea5e9 100%);
+  position: relative;
+}
+
+.user-card-body {
+  padding: 0 28px 28px;
+  text-align: center;
+}
+
+.user-avatar {
+  width: 90px;
+  height: 90px;
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  border-radius: 50%;
+  border: 4px solid #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  color: #fff;
+  margin: -45px auto 16px;
+  box-shadow: 0 8px 24px rgba(14,165,233,0.35);
+  position: relative;
+  z-index: 1;
+}
+
+.user-card-body h2 {
+  color: #1B3C53;
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.user-card-body .user-email {
+  color: #94a3b8;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+.user-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(14,165,233,0.10);
+  color: #0ea5e9;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 50px;
+  margin-bottom: 24px;
+}
+
+.user-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.user-stat {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 14px 10px;
+  text-align: center;
+}
+
+.user-stat .s-num {
+  font-size: 22px;
+  font-weight: 800;
+  color: #1B3C53;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.user-stat .s-lbl {
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.user-logout-btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background: rgba(239,68,68,0.08);
+  color: #ef4444;
+  border: 2px solid rgba(239,68,68,0.15);
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.user-logout-btn:hover {
+  background: #ef4444;
+  color: #fff;
+  border-color: #ef4444;
+}
+
+/* ── Right: Main Content ── */
+.profile-main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Card base */
+.p-card {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  border: 1px solid rgba(0,0,0,0.04);
+  overflow: hidden;
+}
+
+.p-card-header {
+  padding: 20px 28px;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.p-card-header h3 {
+  color: #1B3C53;
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.p-card-header h3 .card-icon {
+  width: 36px;
+  height: 36px;
+  background: rgba(14,165,233,0.10);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0ea5e9;
+  font-size: 15px;
+}
+
+.p-card-body {
+  padding: 28px;
+}
+
+/* Form */
+.profile-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.profile-form-grid .full { grid-column: 1 / -1; }
+
+.pf-group label {
+  display: block;
+  color: #374151;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 7px;
+  letter-spacing: 0.2px;
+}
+
+.pf-input-wrap {
+  position: relative;
+}
+
+.pf-input-wrap .pf-icon {
+  position: absolute;
+  left: 14px;
+  top: 69%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.pf-input-wrap input,
+.pf-input-wrap select {
+  width: 100%;
+  height: 50px;
+  line-height: 48px;
+  padding: 0 14px 0 40px;
+  border: 2px solid #e2e8f0;
+  border-radius: 11px;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  color: #0f172a;
+  background: #f8fafc;
+  transition: all 0.25s;
+  outline: none;
+  -webkit-appearance: none;
+  box-sizing: border-box;
+}
+
+.pf-input-wrap select {
+  line-height: 48px;
+  height: 48px;
+  padding: 0 36px 0 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2364748b' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-color: #f8fafc;
+}
+
+.pf-input-wrap input:focus,
+.pf-input-wrap select:focus {
+  border-color: #0ea5e9;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(14,165,233,0.12);
+}
+
+.pf-input-wrap input:disabled,
+.pf-input-wrap select:disabled {
+  background: #f8fafc;
+  color: #1B3C53;
+  border-color: #e2e8f0;
+  cursor: not-allowed;
+  opacity: 1;
+  -webkit-text-fill-color: #1B3C53;
+}
+
+.pf-input-wrap input[type="number"] {
+  -moz-appearance: textfield;
+}
+.pf-input-wrap input[type="number"]::-webkit-inner-spin-button,
+.pf-input-wrap input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Buttons */
+.btn-edit-profile {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  color: #fff;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 4px 15px rgba(14,165,233,0.3);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.btn-edit-profile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(14,165,233,0.4);
+}
+
+.btn-save-profile {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #fff;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 4px 15px rgba(16,185,129,0.3);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.btn-save-profile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(16,185,129,0.4);
+}
+
+.btn-cancel-profile {
+  background: #f1f5f9;
+  color: #64748b;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: all 0.25s;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.btn-cancel-profile:hover {
+  background: #e2e8f0;
+  color: #374151;
+}
+
+.btn-group {
+  display: flex;
+  gap: 10px;
+}
+
+/* Results */
+.result-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: #f8fafc;
+  border-radius: 14px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(0,0,0,0.04);
+  transition: all 0.25s;
+}
+
+.result-item:last-child { margin-bottom: 0; }
+
+.result-item:hover {
+  background: #f0f9ff;
+  border-color: rgba(14,165,233,0.15);
+}
+
+.result-icon {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.result-icon.normal { background: rgba(16,185,129,0.12); color: #10b981; }
+.result-icon.danger { background: rgba(239,68,68,0.12); color: #ef4444; }
+
+.result-info { flex: 1; }
+
+.result-info h4 {
+  color: #1B3C53;
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+
+.result-info p {
+  color: #64748b;
+  font-size: 12px;
+  margin: 0;
+}
+
+.result-badge {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 50px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: 5px;
+}
+
+.result-badge.normal { background: rgba(16,185,129,0.12); color: #10b981; }
+.result-badge.danger { background: rgba(239,68,68,0.12); color: #ef4444; }
+
+.view-btn {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  color: #fff;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: all 0.25s;
+  flex-shrink: 0;
+  box-shadow: 0 3px 10px rgba(14,165,233,0.25);
+}
+
+.view-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(14,165,233,0.4);
+}
+
+/* Loading overlay */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.9);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #0ea5e9;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Notification */
+.notification-message {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  color: white;
+  padding: 16px 24px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  z-index: 10000;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: slideIn 0.4s ease;
+  max-width: 380px;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .profile-layout { grid-template-columns: 1fr; }
+  .user-card { max-width: 400px; margin: 0 auto; }
+}
+
+@media (max-width: 600px) {
+  .profile-form-grid { grid-template-columns: 1fr; }
+  .profile-form-grid .full { grid-column: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <p style="color:#1B3C53; font-weight: 600;">Updating profile...</p>
+</div>
+
+<!-- Header Container -->
+<div id="header-container"></div>
+
+<!-- Inner Header -->
+<section class="inner-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <h1>My Profile</h1>
+        <p>Manage your personal information and view your scan history</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Profile Section -->
+<section class="profile-section">
+  <div class="container">
+    <div class="profile-layout">
+
+      <!-- Left: User Card -->
+      <div class="user-card">
+        <div class="user-card-banner"></div>
+        <div class="user-card-body">
+          <div class="user-avatar">
+            <i class="fa fa-user"></i>
+          </div>
+          <h2 id="displayName">{{ user.get('full_name', 'User') }}</h2>
+          <p class="user-email" id="displayEmail">{{ user.get('email', '') }}</p>
+
+          <div class="user-badge">
+            <i class="fa fa-heartbeat"></i> Active Patient
+          </div>
+
+          <button class="user-logout-btn" onclick="logout()">
+            <i class="fa fa-sign-out" style="margin-right:8px;"></i>Log Out
+          </button>
+        </div>
+      </div>
+
+      <!-- Right: Main -->
+      <div class="profile-main">
+
+        <!-- Personal Info Card -->
+        <div class="p-card">
+          <div class="p-card-header">
+            <h3>
+              <div class="card-icon"><i class="fa fa-user"></i></div>
+              Personal Information
+            </h3>
+            <div class="btn-group">
+              <button class="btn-edit-profile" id="editBtn" onclick="enableEdit()">
+                <i class="fa fa-pencil"></i> Edit Profile
+              </button>
+              <button class="btn-save-profile" id="saveBtn" onclick="saveProfile()" style="display:none;">
+                <i class="fa fa-check"></i> Save
+              </button>
+              <button class="btn-cancel-profile" id="cancelBtn" onclick="cancelEdit()" style="display:none;">
+                <i class="fa fa-times"></i> Cancel
+              </button>
+            </div>
+          </div>
+
+          <div class="p-card-body">
+            <form class="profile-form-grid" id="profileForm">
+
+              <div class="pf-group">
+                <label>Full Name</label>
+                <div class="pf-input-wrap">
+                  <i class="fa fa-user pf-icon"></i>
+                  <input type="text" id="fullName" value="{{ user.get('full_name', '') }}" disabled>
+                </div>
+              </div>
+
+              <div class="pf-group">
+                <label>Age</label>
+                <div class="pf-input-wrap">
+                  <i class="fa fa-calendar pf-icon"></i>
+                  <input type="number" id="age" value="{{ user.get('age', '') }}" min="0" max="150" disabled>
+                </div>
+              </div>
+
+              <div class="pf-group">
+                <label>Gender</label>
+                <div class="pf-input-wrap">
+                  <i class="fa fa-venus-mars pf-icon"></i>
+                  <select id="gender" disabled>
+                    <option value="male" {% if user.get('gender','').lower() == 'male' %}selected{% endif %}>Male</option>
+                    <option value="female" {% if user.get('gender','').lower() == 'female' %}selected{% endif %}>Female</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="pf-group">
+                <label>Phone Number</label>
+                <div class="pf-input-wrap">
+                  <i class="fa fa-phone pf-icon"></i>
+                  <input type="tel" id="phone" value="{{ user.get('phone', '') }}" disabled>
+                </div>
+              </div>
+
+              <div class="pf-group full">
+                <label>Email Address</label>
+                <div class="pf-input-wrap">
+                  <i class="fa fa-envelope pf-icon"></i>
+                  <input type="email" id="email" value="{{ user.get('email', '') }}" disabled>
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+        <!-- Results Card -->
+        <div class="p-card">
+          <div class="p-card-header">
+            <h3>
+              <div class="card-icon"><i class="fa fa-file-text"></i></div>
+              My Latest Results
+            </h3>
+            <div>
+              <a href="index.html" style="color:#10b981;font-size:13px;font-weight:600;text-decoration:none;margin-right:15px;">
+                <i class="fa fa-plus"></i> New Scan
+              </a>
+              <a href="my-results.html" style="color:#0ea5e9;font-size:13px;font-weight:600;text-decoration:none;">
+                View All <i class="fa fa-arrow-right" style="margin-left:4px;"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="p-card-body" id="resultsContainer">
+            <div style="text-align: center; padding: 20px; color: #999;">
+              <i class="fa fa-spinner fa-spin"></i>
+              <p>Loading your results...</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer Container -->
+<div id="footer-container"></div>
+
+<!-- Scripts -->
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/components/header.js"></script>
+<script src="/static/js/components/footer.js"></script>
+
+<script>
+// NOTIFICATION SYSTEM
+function showNotification(message, type = 'success', title = null) {
+    const existing = document.querySelector('.notification-message');
+    if (existing) existing.remove();
+    
+    const notification = document.createElement('div');
+    notification.className = `notification-message ${type}`;
+    notification.style.cssText = `
+        position: fixed; top: 20px; right: 20px; color: white;
+        padding: 16px 24px; border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 10000;
+        font-family: 'Poppins', sans-serif; display: flex;
+        align-items: center; gap: 12px; animation: slideIn 0.4s ease;
+        max-width: 380px;
+        background: ${type === 'error' ? '#ef4444' : type === 'success' ? '#10b981' : '#0ea5e9'};
+    `;
+    
+    notification.innerHTML = `
+        <div style="flex:1;">
+            <strong style="display:block; font-size: 15px;">${title || (type === 'error' ? 'Error' : 'Success')}</strong>
+            <p style="margin:0; font-size:13px; opacity:0.9;">${message}</p>
+        </div>
+        <button onclick="this.parentElement.remove()" style="background:none; border:none; color:white; cursor:pointer; font-size: 20px;">&times;</button>
+    `;
+    
+    document.body.appendChild(notification);
+    setTimeout(() => { if(notification.parentElement) notification.remove(); }, 5000);
+}
+
+// Global variables
+var editableFields = ['fullName', 'phone', 'email'];
+var allFields = ['fullName', 'age', 'gender', 'phone', 'email'];
+
+var originalData = {
+  fullName: '{{ user.get("full_name", "") }}',
+  age: '{{ user.get("age", "") }}',
+  gender: '{{ user.get("gender", "") }}',
+  phone: '{{ user.get("phone", "") }}',
+  email: '{{ user.get("email", "") }}'
+};
+
+// Store original values in localStorage as backup
+localStorage.setItem('userName', '{{ user.get("full_name", "") }}');
+localStorage.setItem('userEmail', '{{ user.get("email", "") }}');
+localStorage.setItem('userAge', '{{ user.get("age", "") }}');
+localStorage.setItem('userPhone', '{{ user.get("phone", "") }}');
+localStorage.setItem('userGender', '{{ user.get("gender", "") }}');
+localStorage.setItem('isLoggedIn', 'true');
+
+function enableEdit() {
+  editableFields.forEach(function(id) {
+    var el = document.getElementById(id);
+    el.disabled = false;
+    el.style.background = '#fff';
+  });
+  
+  document.getElementById('age').disabled = true;
+  document.getElementById('gender').disabled = true;
+  
+  document.getElementById('editBtn').style.display = 'none';
+  document.getElementById('saveBtn').style.display = 'flex';
+  document.getElementById('cancelBtn').style.display = 'flex';
+  
+  showNotification('You can now edit', 'info', 'Edit Mode');
+}
+
+function validateProfileData(data) {
+  const age = parseInt(data.age);
+  if (isNaN(age) || age < 0 || age > 150) {
+    showNotification('Invalid age data.', 'error', 'Error');
+    return false;
+  }
+  
+  if (!data.gender || (data.gender !== 'male' && data.gender !== 'female')) {
+    showNotification('Invalid gender data.', 'error', 'Error');
+    return false;
+  }
+  
+  if (data.phone && data.phone.length < 8) {
+    showNotification('Please enter a valid phone number (at least 8 digits).', 'error', 'Invalid Phone');
+    return false;
+  }
+  
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(data.email)) {
+    showNotification('Please enter a valid email address.', 'error', 'Invalid Email');
+    return false;
+  }
+  
+  if (!data.fullName || data.fullName.trim().length < 2) {
+    showNotification('Please enter a valid full name (at least 2 characters).', 'error', 'Invalid Name');
+    return false;
+  }
+  
+  return true;
+}
+
+function saveProfile() {
+  var updatedData = {
+    fullName: document.getElementById('fullName').value.trim(),
+    age: document.getElementById('age').value,
+    gender: document.getElementById('gender').value,
+    phone: document.getElementById('phone').value.trim(),
+    email: document.getElementById('email').value.trim()
+  };
+  
+  if (!validateProfileData(updatedData)) {
+    return;
+  }
+  
+  document.getElementById('loadingOverlay').style.display = 'flex';
+  
+  fetch('/update-profile', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(updatedData)
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      document.getElementById('displayName').textContent = updatedData.fullName;
+      document.getElementById('displayEmail').textContent = updatedData.email;
+      
+      originalData = updatedData;
+      
+      localStorage.setItem('userName', updatedData.fullName);
+      localStorage.setItem('userEmail', updatedData.email);
+      localStorage.setItem('userAge', updatedData.age);
+      localStorage.setItem('userPhone', updatedData.phone);
+      localStorage.setItem('userGender', updatedData.gender);
+      
+      allFields.forEach(function(id) {
+        var el = document.getElementById(id);
+        el.disabled = true;
+        el.style.background = '';
+      });
+      
+      document.getElementById('editBtn').style.display = 'flex';
+      document.getElementById('saveBtn').style.display = 'none';
+      document.getElementById('cancelBtn').style.display = 'none';
+      
+      showNotification('Profile updated successfully!', 'success', 'Updated');
+    } else {
+      showNotification('Error updating profile: ' + (data.error || 'Unknown error'), 'error', 'Error');
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    showNotification('Error updating profile. Please try again.', 'error', 'Error');
+  })
+  .finally(() => {
+    document.getElementById('loadingOverlay').style.display = 'none';
+  });
+}
+
+function cancelEdit() {
+  document.getElementById('fullName').value = originalData.fullName || '';
+  document.getElementById('age').value = originalData.age || '';
+  document.getElementById('gender').value = originalData.gender || 'male';
+  document.getElementById('phone').value = originalData.phone || '';
+  document.getElementById('email').value = originalData.email || '';
+  
+  allFields.forEach(function(id) {
+    var el = document.getElementById(id);
+    el.disabled = true;
+    el.style.background = '';
+  });
+  
+  document.getElementById('editBtn').style.display = 'flex';
+  document.getElementById('saveBtn').style.display = 'none';
+  document.getElementById('cancelBtn').style.display = 'none';
+  
+  showNotification('Edit cancelled. Changes discarded.', 'info', 'Cancelled');
+}
+
+function logout() {
+  const overlay = document.getElementById('loadingOverlay');
+  if (overlay) overlay.style.display = 'flex';
+  
+  localStorage.clear();
+  
+  showNotification('Logged out successfully!', 'info', 'Goodbye');
+  
+  setTimeout(() => {
+    window.location.href = '/logout';
+  }, 1500);
+}
+
+// Load user's actual results from database
+async function loadUserResults() {
+  try {
+    const response = await fetch('/api/my-results?t=' + new Date().getTime());
+    const data = await response.json();
+
+    console.log('[loadUserResults] Response:', data);
+
+    const container = document.getElementById('resultsContainer');
+
+    if (!data.success || !data.results || data.results.length === 0) {
+      container.innerHTML = `
+        <div style="text-align: center; padding: 20px; color: #999;">
+          <i class="fa fa-inbox"></i>
+          <p>No analysis results yet</p>
+          <a href="/index.html" style="color: #0ea5e9; text-decoration: none; font-size: 13px;">Upload your first scan</a>
+        </div>
+      `;
+      return;
+    }
+
+    console.log('[loadUserResults] Found ' + data.results.length + ' results');
+
+    let html = '';
+    const results = data.results.slice(0, 3);
+
+    results.forEach((result) => {
+      const pred = result.predictions;
+      const overallStatus = pred.overall_status;
+      const classification = pred.cancer_stage?.classification || 'Unknown';
+      const stage = pred.cancer_stage?.stage || 'Unknown';
+      const date = new Date(result.created_at).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+
+      // Determine if malignant (cancer detected)
+      const isMalignant = (classification === 'Malignant' || overallStatus === 'ABNORMAL' || overallStatus === 'CANCER');
+      const isBenign = (classification === 'Benign' || overallStatus === 'NORMAL');
+      
+      // Set colors based on result type
+      let iconClass = 'normal';
+      let badgeClass = 'normal';
+      let icon = 'fa-check-circle';
+      let statusText = 'Normal / Benign';
+      let stageText = stage;
+      
+      if (isMalignant) {
+        iconClass = 'danger';
+        badgeClass = 'danger';
+        icon = 'fa-exclamation-circle';
+        statusText = 'Abnormal / Malignant';
+      } else if (isBenign) {
+        iconClass = 'normal';
+        badgeClass = 'normal';
+        icon = 'fa-check-circle';
+        statusText = 'Normal / Benign';
+      }
+
+      html += `
+        <div class="result-item">
+          <div class="result-icon ${iconClass}">
+            <i class="fa ${icon}"></i>
+          </div>
+          <div class="result-info">
+            <h4>CT Scan — ${date}</h4>
+            <p>${stageText} - ${statusText}</p>
+            <span class="result-badge ${badgeClass}">${classification}</span>
+          </div>
+        </div>
+      `;
+    });
+
+    container.innerHTML = html;
+    console.log('[loadUserResults] Display complete');
+
+  } catch (error) {
+    console.error('Error loading results:', error);
+    document.getElementById('resultsContainer').innerHTML = `
+      <div style="text-align: center; padding: 20px; color: #999;">
+        <i class="fa fa-exclamation-triangle"></i>
+        <p>Error loading results</p>
+      </div>
+    `;
+  }
+}
+
+// Load results on page load
+document.addEventListener('DOMContentLoaded', function() {
+  loadUserResults();
+
+  const ageInput = document.getElementById('age');
+  if (ageInput) {
+    ageInput.addEventListener('input', function() {
+      let value = parseInt(this.value);
+      if (value < 0) this.value = 0;
+      if (value > 150) this.value = 150;
+    });
+  }
+
+  document.getElementById('age').disabled = true;
+  document.getElementById('gender').disabled = true;
+});
+</script>
+</body>
+</html>

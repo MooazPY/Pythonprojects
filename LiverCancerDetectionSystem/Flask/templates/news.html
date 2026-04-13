@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Liver Cancer News - Liver Care</title>
+<meta name="author" content="Liver Care">
+<meta name="description" content="Latest global news and breakthroughs in liver cancer research and treatment">
+
+<!-- FAVICON -->
+<link href="ico/favicon.png" rel="shortcut icon">
+
+<!-- CSS -->
+<link href="/static/css/ionicons.min.css" rel="stylesheet">
+<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+<link href="/static/css/style.css" rel="stylesheet">
+<link href="/static/css/shared.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+/* Dashboard Section */
+.dashboard-section {
+  padding: 70px 0;
+  background: #f8fafc;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 36px;
+}
+
+.stat-box {
+  border-radius: 18px;
+  padding: 28px 22px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.35s;
+}
+
+.stat-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.18);
+}
+
+.stat-box::before {
+  content: '';
+  position: absolute;
+  top: -30px; right: -20px;
+  width: 100px; height: 100px;
+  background: rgba(255,255,255,0.10);
+  border-radius: 50%;
+}
+
+.stat-box.blue { background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); box-shadow: 0 8px 25px rgba(14,165,233,0.3); }
+.stat-box.green { background: linear-gradient(135deg, #10b981 0%, #059669 100%); box-shadow: 0 8px 25px rgba(16,185,129,0.3); }
+.stat-box.orange { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); box-shadow: 0 8px 25px rgba(245,158,11,0.3); }
+.stat-box.red { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); box-shadow: 0 8px 25px rgba(239,68,68,0.3); }
+
+.stat-box-icon {
+  width: 44px; height: 44px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 16px;
+}
+
+.stat-box .stat-number {
+  font-size: 34px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 6px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.stat-box .stat-label {
+  font-size: 13px;
+  color: rgba(255,255,255,0.85);
+  font-weight: 500;
+}
+
+/* Dashboard Card */
+.dashboard-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 28px 30px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  margin-bottom: 28px;
+  border: 1px solid rgba(0,0,0,0.04);
+}
+
+.dashboard-card h3 {
+  color: #1B3C53;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid #f1f5f9;
+}
+
+.dashboard-card h3 i {
+  width: 36px; height: 36px;
+  background: rgba(14,165,233,0.1);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: #0ea5e9;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+/* Charts grid */
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-bottom: 28px;
+}
+
+/* News Article Card */
+.news-article {
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  transition: all 0.3s;
+  border: 1px solid rgba(0,0,0,0.04);
+  margin-bottom: 24px;
+}
+
+.news-article:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+
+.news-article-image {
+  width: 100%;
+  height: 220px;
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.news-article-image::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Font Awesome';
+  content: '\f1ea';
+  font-size: 80px;
+  color: rgba(255,255,255,0.2);
+}
+
+.news-article-content {
+  padding: 24px;
+}
+
+.news-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.news-meta i {
+  margin-right: 5px;
+  color: #0ea5e9;
+}
+
+.news-category {
+  display: inline-block;
+  background: rgba(14,165,233,0.1);
+  color: #0ea5e9;
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.news-article h4 {
+  color: #1B3C53;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.news-article p {
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.read-more {
+  color: #0ea5e9;
+  font-weight: 600;
+  font-size: 13px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap 0.3s;
+}
+
+.read-more:hover {
+  gap: 10px;
+  color: #0284c7;
+}
+
+/* Stats Section */
+.stats-section {
+  background: linear-gradient(135deg, #1B3C53 0%, #0f172a 100%);
+  padding: 80px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.stats-section::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -80px;
+  width: 400px; height: 400px;
+  background: rgba(14,165,233,0.08);
+  border-radius: 50%;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.stat-item .stat-number {
+  font-size: 52px;
+  font-weight: 800;
+  color: #0ea5e9;
+  line-height: 1;
+  margin-bottom: 12px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.stat-item .stat-label {
+  font-size: 15px;
+  color: rgba(255,255,255,0.75);
+  font-weight: 500;
+}
+
+/* CTA Section */
+.cta-section {
+  padding: 90px 0;
+  background: linear-gradient(135deg, rgba(14,165,233,0.06) 0%, rgba(139,92,246,0.06) 100%);
+  text-align: center;
+}
+
+.cta-section h2 {
+  font-size: 36px;
+  font-weight: 800;
+  color: #1B3C53;
+  margin-bottom: 14px;
+  letter-spacing: -0.5px;
+}
+
+.cta-section p {
+  color: #64748b;
+  font-size: 16px;
+  margin-bottom: 32px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 992px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .charts-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 576px) {
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .stat-item .stat-number { font-size: 36px; }
+  .cta-section h2 { font-size: 26px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Header Container -->
+<div id="header-container"></div>
+
+<!-- Inner Header -->
+<section class="inner-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <h1>Global Liver Cancer News</h1>
+        <p>Latest breakthroughs, research updates, and medical advancements</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Dashboard Section -->
+<section class="dashboard-section">
+  <div class="container">
+
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+      <div class="stat-box blue">
+        <div class="stat-box-icon"><i class="fa fa-newspaper-o"></i></div>
+        <div class="stat-number">156</div>
+        <div class="stat-label">Research Articles</div>
+      </div>
+      <div class="stat-box green">
+        <div class="stat-box-icon"><i class="fa fa-flask"></i></div>
+        <div class="stat-number">89</div>
+        <div class="stat-label">Clinical Trials</div>
+      </div>
+      <div class="stat-box orange">
+        <div class="stat-box-icon"><i class="fa fa-trophy"></i></div>
+        <div class="stat-number">34</div>
+        <div class="stat-label">Breakthroughs</div>
+      </div>
+      <div class="stat-box red">
+        <div class="stat-box-icon"><i class="fa fa-exclamation-triangle"></i></div>
+        <div class="stat-number">905K</div>
+        <div class="stat-label">Global Cases (2024)</div>
+      </div>
+    </div>
+
+    <!-- Latest News Articles -->
+    <div class="dashboard-card">
+      <h3><i class="fa fa-newspaper-o"></i> Latest News &amp; Research</h3>
+      
+      <div class="row">
+        <div class="col-md-6">
+          <div class="news-article">
+            <div class="news-article-image"></div>
+            <div class="news-article-content">
+              <div class="news-meta">
+                <span class="news-category">Breakthrough</span>
+                <span><i class="fa fa-calendar"></i> March 2026</span>
+                <span><i class="fa fa-map-marker"></i> USA</span>
+              </div>
+              <h4>New Immunotherapy Shows 68% Success Rate in Advanced HCC</h4>
+              <p>Researchers at Johns Hopkins University announce promising results from Phase III trials of a novel immunotherapy combination that showed a 68% response rate in patients with advanced hepatocellular carcinoma.</p>
+              <a href="#" class="read-more">Read Full Article <i class="fa fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="news-article">
+            <div class="news-article-image"></div>
+            <div class="news-article-content">
+              <div class="news-meta">
+                <span class="news-category">Prevention</span>
+                <span><i class="fa fa-calendar"></i> March 2026</span>
+                <span><i class="fa fa-map-marker"></i> WHO</span>
+              </div>
+              <h4>WHO Launches Global Hepatitis B Vaccination Campaign</h4>
+              <p>World Health Organization initiates comprehensive vaccination program across 45 countries to reduce liver cancer risk. Program targets 50 million people in high-risk regions with focus on prevention.</p>
+              <a href="#" class="read-more">Read Full Article <i class="fa fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="news-article">
+            <div class="news-article-image"></div>
+            <div class="news-article-content">
+              <div class="news-meta">
+                <span class="news-category">Technology</span>
+                <span><i class="fa fa-calendar"></i> February 2026</span>
+                <span><i class="fa fa-map-marker"></i> Japan</span>
+              </div>
+              <h4>AI Detection System Achieves 95% Accuracy in Early Diagnosis</h4>
+              <p>Tokyo Medical University develops artificial intelligence system that detects early-stage liver cancer with 95% accuracy, potentially revolutionizing screening programs worldwide and enabling earlier intervention.</p>
+              <a href="#" class="read-more">Read Full Article <i class="fa fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="news-article">
+            <div class="news-article-image"></div>
+            <div class="news-article-content">
+              <div class="news-meta">
+                <span class="news-category">Treatment</span>
+                <span><i class="fa fa-calendar"></i> February 2026</span>
+                <span><i class="fa fa-map-marker"></i> Germany</span>
+              </div>
+              <h4>Targeted Radiation Therapy Reduces Side Effects by 40%</h4>
+              <p>German researchers present new precision radiation technique that minimizes damage to healthy liver tissue while effectively treating tumors. Clinical trials show significant improvement in patient quality of life.</p>
+              <a href="#" class="read-more">Read Full Article <i class="fa fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="news-article">
+            <div class="news-article-image"></div>
+            <div class="news-article-content">
+              <div class="news-meta">
+                <span class="news-category">Research</span>
+                <span><i class="fa fa-calendar"></i> January 2026</span>
+                <span><i class="fa fa-map-marker"></i> UK</span>
+              </div>
+              <h4>Blood Test Detects Liver Cancer 2 Years Before Symptoms</h4>
+              <p>Cambridge University scientists develop revolutionary blood test capable of detecting liver cancer biomarkers up to two years before clinical symptoms appear, offering hope for earlier diagnosis and treatment.</p>
+              <a href="#" class="read-more">Read Full Article <i class="fa fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="news-article">
+            <div class="news-article-image"></div>
+            <div class="news-article-content">
+              <div class="news-meta">
+                <span class="news-category">Clinical Trial</span>
+                <span><i class="fa fa-calendar"></i> January 2026</span>
+                <span><i class="fa fa-map-marker"></i> China</span>
+              </div>
+              <h4>Combination Therapy Extends Survival by 18 Months</h4>
+              <p>Shanghai Cancer Center reports breakthrough results combining targeted therapy with checkpoint inhibitors, extending median survival time by 18 months in patients with inoperable hepatocellular carcinoma.</p>
+              <a href="#" class="read-more">Read Full Article <i class="fa fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Research Statistics Charts -->
+    <div class="charts-grid">
+      <div class="dashboard-card">
+        <h3><i class="fa fa-line-chart"></i> Research Publications (2020-2026)</h3>
+        <canvas id="publicationsChart" height="200"></canvas>
+      </div>
+      <div class="dashboard-card">
+        <h3><i class="fa fa-globe"></i> Clinical Trials by Region</h3>
+        <canvas id="trialsChart" height="200"></canvas>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Global Stats Section -->
+<section class="stats-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-sm-6 col-xs-6">
+        <div class="stat-item">
+          <div class="stat-number">905K</div>
+          <div class="stat-label">Annual Global Cases</div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-6">
+        <div class="stat-item">
+          <div class="stat-number">70%</div>
+          <div class="stat-label">In Asia-Pacific Region</div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-6">
+        <div class="stat-item">
+          <div class="stat-number">45%</div>
+          <div class="stat-label">5-Year Survival Rate</div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-6">
+        <div class="stat-item">
+          <div class="stat-number">2X</div>
+          <div class="stat-label">More Common in Men</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="container">
+    <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(14,165,233,0.1);color:#0ea5e9;font-size:13px;font-weight:700;padding:7px 20px;border-radius:50px;margin-bottom:22px;letter-spacing:1px;">
+      <i class="fa fa-heartbeat"></i> TAKE ACTION TODAY
+    </div>
+    <h2>Early Detection Saves Lives</h2>
+    <p>Upload your liver scan today and get an AI-powered preliminary analysis within minutes.</p>
+    <a href="index.html" class="btn-primary"><i class="fa fa-upload" style="margin-right:8px;"></i>Get Started Now</a>
+  </div>
+</section>
+
+<!-- Footer Container -->
+<div id="footer-container"></div>
+
+<!-- Scripts -->
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/components/header.js"></script>
+<script src="/static/js/components/footer.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Publications Chart
+  var ctxPubs = document.getElementById('publicationsChart');
+  if (ctxPubs) {
+    new Chart(ctxPubs.getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: ['2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+        datasets: [{
+          label: 'Research Publications',
+          data: [1240, 1380, 1520, 1690, 1850, 2100, 2340],
+          backgroundColor: 'rgba(14,165,233,0.1)',
+          borderColor: 'rgba(14,165,233,0.85)',
+          borderWidth: 3,
+          tension: 0.4,
+          fill: true,
+          pointRadius: 5,
+          pointHoverRadius: 7,
+          pointBackgroundColor: '#fff',
+          pointBorderColor: 'rgba(14,165,233,0.85)',
+          pointBorderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { 
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: 'rgba(27,60,83,0.95)',
+            padding: 12,
+            titleFont: { size: 13, weight: 'bold' },
+            bodyFont: { size: 12 }
+          }
+        },
+        scales: {
+          y: { 
+            beginAtZero: true, 
+            grid: { color: 'rgba(0,0,0,0.05)' },
+            ticks: { font: { size: 11 } }
+          },
+          x: { 
+            grid: { display: false },
+            ticks: { font: { size: 11 } }
+          }
+        }
+      }
+    });
+  }
+
+  // Clinical Trials Chart
+  var ctxTrials = document.getElementById('trialsChart');
+  if (ctxTrials) {
+    new Chart(ctxTrials.getContext('2d'), {
+      type: 'doughnut',
+      data: {
+        labels: ['North America', 'Europe', 'Asia-Pacific', 'Other'],
+        datasets: [{
+          data: [28, 25, 38, 9],
+          backgroundColor: [
+            'rgba(14,165,233,0.85)', 
+            'rgba(139,92,246,0.85)', 
+            'rgba(16,185,129,0.85)', 
+            'rgba(245,158,11,0.85)'
+          ],
+          borderWidth: 3,
+          borderColor: '#fff'
+        }]
+      },
+      options: {
+        responsive: true,
+        cutout: '65%',
+        plugins: { 
+          legend: { 
+            position: 'bottom', 
+            labels: { 
+              padding: 16, 
+              font: { size: 13 },
+              usePointStyle: true,
+              pointStyle: 'circle'
+            } 
+          },
+          tooltip: {
+            backgroundColor: 'rgba(27,60,83,0.95)',
+            padding: 12,
+            callbacks: {
+              label: function(context) {
+                return context.label + ': ' + context.parsed + '%';
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+});
+</script>
+
+</body>
+</html>

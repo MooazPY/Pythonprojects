@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verify Email - Liver Care</title>
+<link href="/static/css/ionicons.min.css" rel="stylesheet">
+<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+<link href="/static/css/shared.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family:'Poppins','Segoe UI',sans-serif;
+  background:#f1f5f9; min-height:100vh;
+  display:flex; align-items:stretch;
+}
+.auth-wrapper { display:flex; width:100%; min-height:100vh; }
+
+/* Left panel */
+.auth-left {
+  flex:0 0 42%;
+  background:linear-gradient(155deg,#0f172a 0%,#1B3C53 50%,#0ea5e9 100%);
+  padding:60px 50px;
+  display:flex; flex-direction:column; justify-content:space-between;
+  position:relative; overflow:hidden;
+}
+.auth-left::before {
+  content:''; position:absolute; top:-100px; right:-80px;
+  width:340px; height:340px; background:rgba(255,255,255,.05);
+  border-radius:50%; pointer-events:none;
+}
+.auth-left::after {
+  content:''; position:absolute; bottom:-120px; left:-60px;
+  width:400px; height:400px; background:rgba(255,255,255,.03);
+  border-radius:50%; pointer-events:none;
+}
+.auth-left-logo a { display:inline-block; position:relative; z-index:2; }
+.auth-left-logo img { height:50px; }
+.auth-left-content {
+  position:relative; z-index:2; flex:1;
+  display:flex; flex-direction:column; justify-content:center;
+  padding:50px 0 40px;
+}
+.auth-left-content h2 { color:#fff; font-size:34px; font-weight:800; line-height:1.25; margin-bottom:18px; }
+.auth-left-content h2 span { color:#38bdf8; }
+.auth-left-content p { color:rgba(255,255,255,.70); font-size:15px; line-height:1.8; margin-bottom:30px; }
+.info-list { list-style:none; padding:0; margin:0; }
+.info-list li {
+  display:flex; align-items:center; gap:14px;
+  color:rgba(255,255,255,.85); font-size:14px;
+  margin-bottom:16px; font-weight:500;
+}
+.info-list li .feat-icon {
+  width:38px; height:38px; min-width:38px;
+  background:rgba(255,255,255,.12); border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:16px; color:#38bdf8;
+}
+.auth-left-footer { position:relative; z-index:2; }
+.auth-left-footer p { color:rgba(255,255,255,.45); font-size:13px; }
+
+/* Right panel */
+.auth-right {
+  flex:1; background:#fff;
+  display:flex; align-items:center; justify-content:center;
+  padding:50px 40px;
+}
+.auth-form-wrap { width:100%; max-width:440px; }
+
+/* Email badge */
+.email-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  background:#f0f9ff; border:1px solid #bae6fd;
+  border-radius:8px; padding:8px 14px;
+  color:#0369a1; font-size:14px; font-weight:600;
+  margin-bottom:28px; max-width:100%;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+
+/* Form header */
+.form-header { margin-bottom:8px; }
+.form-header h1 { color:#0f172a; font-size:26px; font-weight:800; margin-bottom:6px; }
+.form-header p  { color:#64748b; font-size:15px; margin-bottom:24px; }
+
+/* Code inputs */
+.code-inputs {
+  display:flex; gap:10px; justify-content:center; margin-bottom:28px;
+}
+.code-inputs input {
+  width:52px; height:64px; text-align:center;
+  font-size:26px; font-weight:700; color:#0f172a;
+  border:2px solid #e2e8f0; border-radius:12px;
+  background:#f8fafc; outline:none; transition:all .25s;
+  font-family:'Poppins',sans-serif;
+}
+.code-inputs input:focus {
+  border-color:#0ea5e9; background:#fff;
+  box-shadow:0 0 0 3px rgba(14,165,233,.12);
+}
+
+/* Timer */
+.timer-row {
+  display:flex; align-items:center; justify-content:center;
+  gap:6px; color:#64748b; font-size:14px; margin-bottom:24px;
+}
+.timer-badge {
+  background:#fef3c7; color:#d97706; border-radius:6px;
+  padding:2px 10px; font-weight:700; font-size:14px;
+  min-width:52px; text-align:center;
+}
+.timer-badge.expired { background:#fee2e2; color:#dc2626; }
+
+/* Button */
+.primary-btn {
+  width:100%; padding:16px;
+  background:linear-gradient(135deg,#0ea5e9 0%,#0284c7 100%);
+  color:#fff; border:none; border-radius:12px;
+  font-size:16px; font-weight:700; font-family:'Poppins',sans-serif;
+  cursor:pointer; transition:all .3s;
+  box-shadow:0 8px 25px rgba(14,165,233,.35);
+}
+.primary-btn:hover { transform:translateY(-2px); box-shadow:0 12px 35px rgba(14,165,233,.45); }
+.primary-btn:disabled { opacity:.6; transform:none; cursor:not-allowed; }
+
+.resend-row {
+  text-align:center; margin-top:16px; color:#64748b; font-size:14px;
+}
+.resend-row button {
+  background:none; border:none; color:#0ea5e9; font-weight:600;
+  cursor:pointer; font-family:'Poppins',sans-serif; font-size:14px; padding:0;
+}
+.resend-row button:disabled { color:#94a3b8; cursor:not-allowed; }
+.resend-row button:not(:disabled):hover { color:#0284c7; text-decoration:underline; }
+
+.back-link { text-align:center; margin-top:20px; }
+.back-link a {
+  color:#94a3b8; font-size:14px; text-decoration:none;
+  display:inline-flex; align-items:center; gap:6px; transition:color .2s;
+}
+.back-link a:hover { color:#0ea5e9; }
+
+/* Modal */
+.modal-overlay {
+  position:fixed; inset:0; background:rgba(0,0,0,.45);
+  display:flex; align-items:center; justify-content:center;
+  z-index:9999; animation:fadeIn .25s ease;
+}
+.modal-box {
+  background:#fff; border-radius:16px; padding:44px 40px;
+  max-width:460px; width:90%; text-align:center;
+  box-shadow:0 12px 40px rgba(0,0,0,.2); animation:slideUp .25s ease;
+}
+.modal-icon { font-size:56px; margin-bottom:16px; }
+.modal-box h2 { font-size:22px; font-weight:700; margin-bottom:10px; }
+.modal-box p  { color:#64748b; font-size:15px; line-height:1.6; margin-bottom:28px; }
+.modal-btn {
+  padding:12px 40px; font-size:15px; font-weight:700;
+  border:none; border-radius:10px; cursor:pointer; color:#fff;
+  font-family:'Poppins',sans-serif; transition:all .25s;
+}
+.modal-btn:hover { transform:translateY(-2px); }
+@keyframes fadeIn  { from{opacity:0} to{opacity:1} }
+@keyframes slideUp { from{transform:translateY(24px);opacity:0} to{transform:translateY(0);opacity:1} }
+
+@media(max-width:900px){
+  .auth-wrapper{flex-direction:column;}
+  .auth-left{flex:none;padding:40px 30px;min-height:auto;}
+  .auth-left-content{padding:30px 0 20px;}
+  .auth-left-content h2{font-size:24px;}
+  .auth-right{padding:40px 24px;}
+}
+</style>
+</head>
+<body>
+
+<div class="auth-wrapper">
+
+  <!-- Left Panel -->
+  <div class="auth-left">
+    <div class="auth-left-logo">
+      <a href="index.html">
+        <img src="/static/images/logo-white.png" alt="Liver Care">
+      </a>
+    </div>
+    <div class="auth-left-content">
+      <h2>Almost<br><span>There!</span></h2>
+      <p>We sent a 6-digit code to your email to confirm your identity and activate your account.</p>
+      <ul class="info-list">
+        <li>
+          <div class="feat-icon"><i class="fa fa-envelope"></i></div>
+          Check your inbox (and spam folder)
+        </li>
+        <li>
+          <div class="feat-icon"><i class="fa fa-clock-o"></i></div>
+          Code expires in 10 minutes
+        </li>
+        <li>
+          <div class="feat-icon"><i class="fa fa-shield"></i></div>
+          Your data is safe until verified
+        </li>
+      </ul>
+    </div>
+    <div class="auth-left-footer">
+      <p>&copy; 2025 Liver Care. All rights reserved.</p>
+    </div>
+  </div>
+
+  <!-- Right Panel -->
+  <div class="auth-right">
+    <div class="auth-form-wrap">
+
+      <div class="form-header">
+        <h1>Verify Your Email</h1>
+        <p>Enter the 6-digit code we sent to:</p>
+      </div>
+
+      <div class="email-badge">
+        <i class="fa fa-envelope"></i>
+        <span id="emailDisplay">your email</span>
+      </div>
+
+      <div class="code-inputs">
+        <input type="text" maxlength="1" class="code-digit" id="c1"
+               oninput="moveNext(this,'c2')" onkeydown="movePrev(event,this,null)">
+        <input type="text" maxlength="1" class="code-digit" id="c2"
+               oninput="moveNext(this,'c3')" onkeydown="movePrev(event,this,'c1')">
+        <input type="text" maxlength="1" class="code-digit" id="c3"
+               oninput="moveNext(this,'c4')" onkeydown="movePrev(event,this,'c2')">
+        <input type="text" maxlength="1" class="code-digit" id="c4"
+               oninput="moveNext(this,'c5')" onkeydown="movePrev(event,this,'c3')">
+        <input type="text" maxlength="1" class="code-digit" id="c5"
+               oninput="moveNext(this,'c6')" onkeydown="movePrev(event,this,'c4')">
+        <input type="text" maxlength="1" class="code-digit" id="c6"
+               oninput="moveNext(this,null)" onkeydown="movePrev(event,this,'c5')">
+      </div>
+
+      <!-- Countdown timer -->
+      <div class="timer-row">
+        <i class="fa fa-clock-o"></i>
+        Code expires in <span class="timer-badge" id="timerBadge">10:00</span>
+      </div>
+
+      <button class="primary-btn" id="verifyBtn" onclick="verifyCode()">
+        <i class="fa fa-check-circle" style="margin-right:8px;"></i>Verify & Complete Registration
+      </button>
+
+      <div class="resend-row">
+        Didn't receive it?
+        <button id="resendBtn" onclick="resendCode()" disabled>
+          Resend Code <span id="resendTimer">(60s)</span>
+        </button>
+      </div>
+
+      <div class="back-link">
+        <a href="/register.html"><i class="fa fa-arrow-left"></i> Back to Register</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── Read email from URL ── */
+const urlParams = new URLSearchParams(window.location.search);
+const userEmail = urlParams.get('email') || '';
+document.getElementById('emailDisplay').textContent = userEmail || 'your email';
+
+/* ── Code input helpers ── */
+function moveNext(el, nextId) {
+  if(el.value && nextId) document.getElementById(nextId).focus();
+}
+function movePrev(e, el, prevId) {
+  if(e.key==='Backspace' && !el.value && prevId)
+    document.getElementById(prevId).focus();
+}
+function getCode() {
+  return ['c1','c2','c3','c4','c5','c6']
+    .map(id => document.getElementById(id).value).join('');
+}
+function clearInputs() {
+  ['c1','c2','c3','c4','c5','c6'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('c1').focus();
+}
+
+/* ── Countdown timer (10 min) ── */
+let expireSeconds = 600;
+const timerBadge  = document.getElementById('timerBadge');
+const interval = setInterval(() => {
+  expireSeconds--;
+  if(expireSeconds <= 0) {
+    clearInterval(interval);
+    timerBadge.textContent = 'Expired';
+    timerBadge.classList.add('expired');
+    document.getElementById('verifyBtn').disabled = true;
+    return;
+  }
+  const m = String(Math.floor(expireSeconds/60)).padStart(2,'0');
+  const s = String(expireSeconds % 60).padStart(2,'0');
+  timerBadge.textContent = `${m}:${s}`;
+}, 1000);
+
+/* ── Resend cooldown (60 s) ── */
+let resendCooldown = 60;
+const resendBtn   = document.getElementById('resendBtn');
+const resendTimer = document.getElementById('resendTimer');
+const resendInterval = setInterval(() => {
+  resendCooldown--;
+  if(resendCooldown <= 0) {
+    clearInterval(resendInterval);
+    resendBtn.disabled = false;
+    resendTimer.textContent = '';
+  } else {
+    resendTimer.textContent = `(${resendCooldown}s)`;
+  }
+}, 1000);
+
+/* ── Modal ── */
+function showModal(type, title, message, onClose) {
+  const colors = {success:'#10b981', error:'#ef4444', info:'#0ea5e9'};
+  const icons  = {success:'✅', error:'❌', info:'ℹ️'};
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `
+    <div class="modal-box">
+      <div class="modal-icon">${icons[type]||'ℹ️'}</div>
+      <h2 style="color:${colors[type]||'#0f172a'}">${title}</h2>
+      <p>${message}</p>
+      <button class="modal-btn" style="background:${colors[type]||'#0ea5e9'}">OK</button>
+    </div>`;
+  overlay.querySelector('.modal-btn').onclick = () => {
+    overlay.remove();
+    if(onClose) onClose();
+  };
+  document.body.appendChild(overlay);
+}
+
+function setBtnLoading(btn, loading, label) {
+  btn.disabled  = loading;
+  btn.innerHTML = loading
+    ? '<i class="fa fa-spinner fa-spin" style="margin-right:8px;"></i>Verifying...'
+    : label;
+}
+
+/* ── Verify ── */
+async function verifyCode() {
+  if(!userEmail) { showModal('error','Error','Email not found. Please register again.'); return; }
+  const code = getCode();
+  if(code.length < 6) { showModal('error','Validation','Please enter all 6 digits.'); return; }
+
+  const btn = document.getElementById('verifyBtn');
+  setBtnLoading(btn, true, '');
+
+  try {
+    const res  = await fetch('/api/verify-registration', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({email: userEmail, code})
+    });
+    const data = await res.json();
+    setBtnLoading(btn, false,
+      '<i class="fa fa-check-circle" style="margin-right:8px;"></i>Verify & Complete Registration');
+
+    if(data.success) {
+      clearInterval(interval);
+      localStorage.setItem('isLoggedIn','true');
+      localStorage.setItem('isAdmin','false');
+      localStorage.setItem('userEmail', userEmail);
+      if(data.user_name) localStorage.setItem('userName', data.user_name);
+
+      showModal('success','Registration Complete!',
+        `Welcome, ${data.user_name || 'to Liver Care'}!<br>Your account has been successfully created. Please log in.`,
+        () => window.location.href = '/login.html');
+    } else {
+      showModal('error','Verification Failed', data.message || 'Invalid or expired code.');
+      clearInputs();
+    }
+  } catch(e) {
+    setBtnLoading(btn, false,
+      '<i class="fa fa-check-circle" style="margin-right:8px;"></i>Verify & Complete Registration');
+    showModal('error','Connection Error','Could not connect to server.');
+  }
+}
+
+/* ── Resend ── */
+async function resendCode() {
+  if(!userEmail) return;
+  resendBtn.disabled = true;
+  resendTimer.textContent = '(sending...)';
+  try {
+    const res  = await fetch('/api/resend-verification', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({email: userEmail})
+    });
+    const data = await res.json();
+    if(data.success) {
+      showModal('info','Code Resent','A new code has been sent to your email.');
+      clearInputs();
+      // Reset expire timer
+      expireSeconds = 600;
+      timerBadge.classList.remove('expired');
+      document.getElementById('verifyBtn').disabled = false;
+    } else {
+      showModal('error','Error', data.message || 'Could not resend code.');
+    }
+  } catch(e) {
+    showModal('error','Error','Could not connect to server.');
+  }
+  resendTimer.textContent = '';
+}
+
+/* Auto-focus first input */
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('c1').focus();
+});
+</script>
+</body>
+</html>
