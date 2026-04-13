@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liver Care - Early Detection</title>
+  <meta name="author" content="Liver Care">
+  <meta name="description" content="AI-powered early liver cancer detection platform">
+
+  <!-- FAVICON -->
+  <link href="ico/favicon.png" rel="shortcut icon">
+
+  <!-- CSS -->
+  <link href="/static/css/ionicons.min.css" rel="stylesheet">
+  <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/css/style.css" rel="stylesheet">
+  <link href="/static/css/shared.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <style>
+    /* Your existing styles remain exactly the same */
+    .hero-slider { width: 100%; height: 580px; position: relative; overflow: hidden; }
+    .slide { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity 0.7s ease, visibility 0.7s ease; }
+    .slide.active { opacity: 1; visibility: visible; }
+    .slide-bg { position: absolute; inset: 0; background-size: cover; background-position: center; transform: scale(1.04); transition: transform 7s ease; }
+    .slide.active .slide-bg { transform: scale(1); }
+    .slide-overlay { position: absolute; inset: 0; background: linear-gradient(120deg, rgba(11,26,51,0.88) 0%, rgba(11,60,83,0.7) 60%, rgba(14,165,233,0.15) 100%); }
+    .bg-img-1 { background-image: url(/static/images/banner3.jpg); }
+    .bg-img-2 { background-image: url(/static/images/banner4.jpg); }
+    .bg-img-3 { background-image: url(/static/images/hero1.jpg); }
+    .slide-content { position: absolute; z-index: 10; top: 50%; left: 80px; transform: translateY(-50%); max-width: 600px; }
+    .slide-tag { display: inline-block; background: rgba(14,165,233,0.20); border: 1px solid rgba(14,165,233,0.4); color: #38bdf8; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 6px 18px; border-radius: 50px; margin-bottom: 20px; backdrop-filter: blur(4px); }
+    .slide-content h2 { color: #fff; font-size: 46px; font-weight: 800; line-height: 1.15; margin-bottom: 18px; letter-spacing: -1px; text-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+    .slide-content h2 span { color: #38bdf8; }
+    .slide-content p { color: rgba(255,255,255,0.80); font-size: 16px; line-height: 1.7; margin-bottom: 30px; max-width: 480px; }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+    .hero-btn-primary { background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); color: #fff; padding: 14px 32px; border-radius: 50px; font-weight: 700; font-size: 15px; text-decoration: none; display: inline-block; box-shadow: 0 8px 25px rgba(14,165,233,0.4); transition: all 0.3s; cursor: pointer; border: none; font-family: 'Poppins', sans-serif; }
+    .hero-btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(14,165,233,0.5); color: #fff; text-decoration: none; }
+    .hero-btn-ghost { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.6); padding: 13px 30px; border-radius: 50px; font-weight: 600; font-size: 15px; text-decoration: none; display: inline-block; transition: all 0.3s; backdrop-filter: blur(4px); cursor: pointer; font-family: 'Poppins', sans-serif; }
+    .hero-btn-ghost:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.9); transform: translateY(-3px); color: #fff; text-decoration: none; }
+    .slider-nav { position: absolute; top: 50%; left: 0; right: 0; transform: translateY(-50%); display: flex; justify-content: space-between; padding: 0 24px; z-index: 100; pointer-events: none; }
+    .slider-nav button { width: 50px; height: 50px; background: rgba(255,255,255,0.12); border: 2px solid rgba(255,255,255,0.35); border-radius: 50%; color: #fff; font-size: 22px; cursor: pointer; pointer-events: auto; transition: all 0.3s; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+    .slider-nav button:hover { background: #0ea5e9; border-color: #0ea5e9; transform: scale(1.08); }
+    .slider-dots { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; gap: 10px; }
+    .slider-dots .dot { width: 10px; height: 10px; background: rgba(255,255,255,0.4); border-radius: 50%; cursor: pointer; transition: all 0.3s; border: none; padding: 0; }
+    .slider-dots .dot.active, .slider-dots .dot:hover { background: #0ea5e9; transform: scale(1.3); box-shadow: 0 0 10px rgba(14,165,233,0.6); }
+    .stats-bar { background: linear-gradient(135deg, #1B3C53 0%, #0f172a 100%); padding: 0; }
+    .stats-bar .row { margin: 0; }
+    .stat-item-bar { padding: 28px 20px; text-align: center; border-right: 1px solid rgba(255,255,255,0.07); }
+    .stat-item-bar:last-child { border-right: none; }
+    .stat-item-bar .num { font-size: 34px; font-weight: 800; color: #0ea5e9; line-height: 1; margin-bottom: 6px; font-family: 'Poppins', sans-serif; }
+    .stat-item-bar .lbl { font-size: 13px; color: rgba(255,255,255,0.65); font-weight: 500; letter-spacing: 0.3px; }
+    .upload-section { background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 80px 0; }
+    .upload-section-title { text-align: center; margin-bottom: 45px; }
+    .upload-section-title .tag { display: inline-block; background: rgba(14,165,233,0.12); color: #0ea5e9; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 5px 18px; border-radius: 50px; margin-bottom: 16px; }
+    .upload-section-title h2 { font-size: 34px; font-weight: 800; color: #1B3C53; margin-bottom: 12px; letter-spacing: -0.5px; }
+    .upload-section-title p { color: #64748b; font-size: 15px; max-width: 480px; margin: 0 auto; }
+    .upload-card { background: #fff; border-radius: 20px; padding: 50px 40px; box-shadow: 0 15px 50px rgba(0,0,0,0.10); max-width: 700px; margin: 0 auto; }
+    .upload-area { background: #f8fafc; border: 2px dashed #0ea5e9; border-radius: 16px; padding: 50px 30px; text-align: center; cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden; }
+    .upload-area::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(14,165,233,0.04) 0%, rgba(139,92,246,0.03) 100%); opacity: 0; transition: opacity 0.3s; }
+    .upload-area:hover::before { opacity: 1; }
+    .upload-area:hover { background: #f0f9ff; border-color: #0284c7; transform: scale(1.01); }
+    .upload-icon-wrap { width: 80px; height: 80px; background: linear-gradient(135deg, rgba(14,165,233,0.12) 0%, rgba(14,165,233,0.06) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; animation: pulse-ring 2.5s infinite; }
+    .upload-icon-wrap i { font-size: 36px; color: #0ea5e9; }
+    .upload-area h3 { color: #1B3C53; font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+    .upload-area p { color: #64748b; font-size: 14px; margin-bottom: 6px; }
+    .upload-area .formats { display: inline-block; background: rgba(14,165,233,0.1); color: #0ea5e9; font-size: 12px; font-weight: 600; padding: 4px 14px; border-radius: 50px; margin-top: 8px; }
+    #filePreview { margin-top: 16px; display: none; }
+    #filePreview img { max-height: 160px; border-radius: 10px; border: 2px solid #e2e8f0; object-fit: cover; }
+    #filePreview .file-name { color: #10b981; font-size: 13px; font-weight: 600; margin-top: 10px; }
+    .upload-submit { display: block; width: 100%; margin-top: 24px; padding: 16px; background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s; font-family: 'Poppins', sans-serif; letter-spacing: 0.3px; box-shadow: 0 8px 25px rgba(14,165,233,0.35); }
+    .upload-submit:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(14,165,233,0.45); }
+    .upload-submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+    .info-boxes { padding: 80px 0; background: #fff; }
+    .info-box { border-radius: 18px; padding: 32px 28px; color: #fff; position: relative; overflow: hidden; transition: all 0.35s; margin-bottom: 24px; }
+    .info-box::before { content: ''; position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; background: rgba(255,255,255,0.08); border-radius: 50%; pointer-events: none; }
+    .info-box::after { content: ''; position: absolute; bottom: -50px; left: -20px; width: 160px; height: 160px; background: rgba(255,255,255,0.05); border-radius: 50%; pointer-events: none; }
+    .info-box:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.18); }
+    .info-box.box-1 { background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); }
+    .info-box.box-2 { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); }
+    .info-box.box-3 { background: linear-gradient(135deg, #1B3C53 0%, #0f172a 100%); }
+    .info-box-icon { width: 60px; height: 60px; background: rgba(255,255,255,0.18); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+    .info-box-icon img { width: 32px; }
+    .info-box h3 { color: #fff; font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+    .info-box p { color: rgba(255,255,255,0.85); font-size: 14px; line-height: 1.75; margin: 0; }
+    .latest-news { padding: 80px 0; background: #f8fafc; }
+    .news-card { background: #fff; border-radius: 18px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.07); transition: all 0.35s; height: 100%; }
+    .news-card:hover { transform: translateY(-6px); box-shadow: 0 15px 40px rgba(0,0,0,0.12); }
+    .news-card .news-img { position: relative; overflow: hidden; }
+    .news-card .news-img img { width: 100%; height: 240px; object-fit: cover; transition: transform 0.5s ease; }
+    .news-card:hover .news-img img { transform: scale(1.06); }
+    .news-card .news-category { position: absolute; top: 16px; left: 16px; background: #0ea5e9; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 50px; }
+    .news-card .news-body { padding: 26px; }
+    .news-card .news-meta { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+    .news-card .news-meta span { color: #94a3b8; font-size: 12px; display: flex; align-items: center; gap: 5px; }
+    .news-card .news-meta i { color: #0ea5e9; font-size: 12px; }
+    .news-card h3 { color: #1B3C53; font-size: 19px; font-weight: 700; margin-bottom: 12px; line-height: 1.4; }
+    .news-card p { color: #64748b; font-size: 14px; line-height: 1.7; margin-bottom: 18px; }
+    .news-card .read-more { color: #0ea5e9; font-weight: 700; font-size: 14px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: gap 0.2s; }
+    .news-card .read-more:hover { gap: 10px; color: #0284c7; }
+    .cta-section { background: url(/static/images/hero1.jpg) center / cover no-repeat; padding: 100px 0; position: relative; overflow: hidden; }
+    .cta-section::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(11,26,51,0.92) 0%, rgba(14,165,233,0.45) 100%); }
+    .cta-section .container { position: relative; z-index: 2; text-align: center; }
+    .cta-section .cta-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); color: #fff; font-size: 13px; font-weight: 600; padding: 8px 20px; border-radius: 50px; margin-bottom: 24px; backdrop-filter: blur(4px); }
+    .cta-section h2 { color: #fff; font-size: 42px; font-weight: 800; margin-bottom: 18px; letter-spacing: -0.5px; line-height: 1.2; }
+    .cta-section p { color: rgba(255,255,255,0.80); font-size: 17px; margin-bottom: 36px; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .departments { padding: 80px 0; background: #fff; }
+    .dept-card { background: #fff; border-radius: 18px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.07); transition: all 0.35s; margin-bottom: 30px; border: 1px solid rgba(0,0,0,0.04); }
+    .dept-card:hover { transform: translateY(-6px); box-shadow: 0 15px 40px rgba(0,0,0,0.12); }
+    .dept-card .dept-img { overflow: hidden; position: relative; }
+    .dept-card .dept-img img { width: 100%; height: 210px; object-fit: cover; transition: transform 0.5s ease; }
+    .dept-card:hover .dept-img img { transform: scale(1.06); }
+    .dept-card .dept-body { padding: 26px; }
+    .dept-card .dept-icon { width: 48px; height: 48px; background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+    .dept-card .dept-icon i { color: #fff; font-size: 20px; }
+    .dept-card h3 { color: #1B3C53; font-size: 19px; font-weight: 700; margin-bottom: 10px; }
+    .dept-card p { color: #64748b; font-size: 14px; line-height: 1.7; margin: 0; }
+    .how-it-works { padding: 80px 0; background: linear-gradient(135deg, #f0f9ff 0%, #f8fafc 100%); }
+    .step-card { text-align: center; padding: 36px 24px; background: #fff; border-radius: 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); transition: all 0.35s; position: relative; margin-bottom: 24px; }
+    .step-card:hover { transform: translateY(-6px); box-shadow: 0 15px 40px rgba(0,0,0,0.10); }
+    .step-number { width: 60px; height: 60px; background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 22px; font-weight: 800; color: #fff; box-shadow: 0 8px 20px rgba(14,165,233,0.35); }
+    .step-card h4 { color: #1B3C53; font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+    .step-card p { color: #64748b; font-size: 14px; line-height: 1.7; margin: 0; }
+    @media (max-width: 992px) { .hero-slider { height: 480px; } .slide-content { left: 40px; max-width: 520px; } .slide-content h2 { font-size: 36px; } }
+    @media (max-width: 768px) { .hero-slider { height: 420px; } .slide-content { left: 20px; right: 20px; max-width: 100%; } .slide-content h2 { font-size: 28px; } .slide-content p { font-size: 14px; } .stat-item-bar { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); } .cta-section h2 { font-size: 28px; } .upload-card { padding: 30px 20px; } }
+    @media (max-width: 480px) { .slide-content h2 { font-size: 22px; } .hero-btns { flex-direction: column; } .hero-btn-primary, .hero-btn-ghost { text-align: center; } }
+    .notification-message { position: fixed; top: 20px; right: 20px; color: white; padding: 16px 24px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 10000; font-family: 'Poppins', sans-serif; display: flex; align-items: center; gap: 12px; animation: slideIn 0.4s ease; max-width: 380px; }
+    @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+  </style>
+</head>
+
+<body>
+
+<!-- Header Container -->
+<div id="header-container"></div>
+
+<!-- Hero Slider -->
+<section class="hero-slider">
+  <div class="slide active">
+    <div class="slide-bg bg-img-1"></div>
+    <div class="slide-overlay"></div>
+    <div class="slide-content">
+      <span class="slide-tag"><i class="fa fa-shield" style="margin-right:7px;"></i>AI-Powered Detection</span>
+      <h2>Early Detection<br>Saves <span>Lives</span></h2>
+      <p>Upload your CT scan and get an AI-powered preliminary liver cancer analysis within minutes.</p>
+      <div class="hero-btns">
+        <button onclick="handleUploadClick()" class="hero-btn-primary upload-trigger-btn"><i class="fa fa-upload" style="margin-right:8px;"></i>Upload CT Scan</button>
+        <a href="faq.html" class="hero-btn-ghost">Learn More</a>
+      </div>
+    </div>
+  </div>
+  <div class="slide">
+    <div class="slide-bg bg-img-2"></div>
+    <div class="slide-overlay"></div>
+    <div class="slide-content">
+      <span class="slide-tag"><i class="fa fa-heartbeat" style="margin-right:7px;"></i>Advanced AI Technology</span>
+      <h2>For Early Liver<br>Cancer <span>Detection</span></h2>
+      <p>Our advanced algorithms analyze CT scan images and identify potential signs of liver cancer with high accuracy.</p>
+      <div class="hero-btns">
+        <button onclick="handleUploadClick()" class="hero-btn-primary upload-trigger-btn"><i class="fa fa-upload" style="margin-right:8px;"></i>Get Started</button>
+        <a href="contact-us.html" class="hero-btn-ghost">Contact Us</a>
+      </div>
+    </div>
+  </div>
+  <div class="slide">
+    <div class="slide-bg bg-img-3"></div>
+    <div class="slide-overlay"></div>
+    <div class="slide-content">
+      <span class="slide-tag"><i class="fa fa-clock-o" style="margin-right:7px;"></i>Results in Minutes</span>
+      <h2>Cancer Detected<br>in <span>Seconds</span></h2>
+      <p>Don't wait for symptoms. Early screening gives you the best chance at successful treatment.</p>
+      <div class="hero-btns">
+        <button onclick="handleSignUpClick()" class="hero-btn-primary sign-up-trigger-btn"><i class="fa fa-user-plus" style="margin-right:8px;"></i>Sign Up Free</button>
+        <a href="news.html" class="hero-btn-ghost">View Statistics</a>
+      </div>
+    </div>
+  </div>
+  <div class="slider-nav">
+    <button onclick="changeSlide(-1)" aria-label="Previous slide">&#10094;</button>
+    <button onclick="changeSlide(1)" aria-label="Next slide">&#10095;</button>
+  </div>
+  <div class="slider-dots">
+    <span class="dot active" onclick="goToSlide(0)"></span>
+    <span class="dot" onclick="goToSlide(1)"></span>
+    <span class="dot" onclick="goToSlide(2)"></span>
+  </div>
+</section>
+
+<!-- Stats Bar -->
+<section class="stats-bar">
+  <div class="container-fluid" style="padding:0;">
+    <div class="row" style="margin:0;">
+      <div class="col-md-3 col-sm-6 col-xs-6"><div class="stat-item-bar"><div class="num">185K+</div><div class="lbl">Annual Cases Worldwide</div></div></div>
+      <div class="col-md-3 col-sm-6 col-xs-6"><div class="stat-item-bar"><div class="num">75%</div><div class="lbl">Early Detection Survival Rate</div></div></div>
+      <div class="col-md-3 col-sm-6 col-xs-6"><div class="stat-item-bar"><div class="num">24/7</div><div class="lbl">AI Analysis Available</div></div></div>
+      <div class="col-md-3 col-sm-6 col-xs-6"><div class="stat-item-bar"><div class="num">1,247+</div><div class="lbl">Patients Helped</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Upload CT Scan Section -->
+<section class="upload-section" id="upload-section">
+  <div class="container">
+    <div class="upload-section-title">
+      <span class="tag"><i class="fa fa-upload" style="margin-right:6px;"></i>Upload & Analyze</span>
+      <h2>Upload Your CT Scan</h2>
+      <p>Get an AI-powered preliminary liver cancer analysis — fast, secure, and accurate.</p>
+    </div>
+    <div class="upload-card">
+      <div class="upload-area" id="uploadArea" onclick="triggerFileUpload()">
+        <div class="upload-icon-wrap"><i class="fa fa-cloud-upload"></i></div>
+        <h3>Drop your CT scan here</h3>
+        <p>or click to browse your files</p>
+        <div id="filePreview"><div class="file-name" id="fileName"></div></div>
+        <span class="formats"><i class="fa fa-check-circle" style="margin-right:5px;"></i>Supported: JPG, PNG only</span>
+        <input type="file" id="mriFile" style="display:none;" accept=".jpg,.jpeg,.png">
+      </div>
+      <button type="button" class="upload-submit" onclick="submitCT()"><i class="fa fa-search" style="margin-right:10px;"></i>Analyze CT Scan</button>
+      <p style="text-align:center;color:#94a3b8;font-size:12px;margin-top:14px;margin-bottom:0;"><i class="fa fa-lock" style="margin-right:5px;color:#10b981;"></i>Your data is encrypted and securely stored.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Info Boxes -->
+<section class="info-boxes">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:50px;">
+      <span style="display:inline-block;background:rgba(14,165,233,0.10);color:#0ea5e9;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 18px;border-radius:50px;margin-bottom:14px;">Why It Matters</span>
+      <h2 style="font-size:34px;font-weight:800;color:#1B3C53;margin-bottom:12px;letter-spacing:-0.5px;">Understanding Liver Health</h2>
+      <p style="color:#64748b;font-size:15px;max-width:500px;margin:0 auto;">Know the key facts that can help protect your liver and detect cancer early.</p>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-sm-4 col-xs-12"><div class="info-box box-1"><div class="info-box-icon"><img src="/static/images/icon1.png" alt="Icon"></div><h3>Liver Function</h3><p>The liver filters toxins, produces essential proteins, and stores vital nutrients for your body's daily functions.</p></div></div>
+      <div class="col-md-4 col-sm-4 col-xs-12"><div class="info-box box-2"><div class="info-box-icon"><img src="/static/images/icon2.png" alt="Icon"></div><h3>Disease Risk Factors</h3><p>Hepatitis B, C, alcohol abuse, and obesity significantly increase liver cancer risk. Know your risk factors.</p></div></div>
+      <div class="col-md-4 col-sm-4 col-xs-12"><div class="info-box box-3"><div class="info-box-icon"><img src="/static/images/icon3.png" alt="Icon"></div><h3>Early Symptoms</h3><p>Fatigue, abdominal pain, and jaundice are key early signs. Detecting them early improves treatment outcomes.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="how-it-works">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:50px;">
+      <span style="display:inline-block;background:rgba(14,165,233,0.10);color:#0ea5e9;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 18px;border-radius:50px;margin-bottom:14px;">Simple Process</span>
+      <h2 style="font-size:34px;font-weight:800;color:#1B3C53;margin-bottom:12px;letter-spacing:-0.5px;">How It Works</h2>
+      <p style="color:#64748b;font-size:15px;max-width:500px;margin:0 auto;">Get your liver cancer screening done in 3 easy steps.</p>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-sm-4 col-xs-12"><div class="step-card"><div class="step-number">1</div><h4>Create Account</h4><p>Sign up for free and create your secure patient profile in less than 2 minutes.</p></div></div>
+      <div class="col-md-4 col-sm-4 col-xs-12"><div class="step-card"><div class="step-number">2</div><h4>Upload CT Scan</h4><p>Upload your CT scan images securely. We support JPG and PNG formats.</p></div></div>
+      <div class="col-md-4 col-sm-4 col-xs-12"><div class="step-card"><div class="step-number">3</div><h4>Get Results</h4><p>Receive your AI-powered analysis report within minutes. Our team reviews all results.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Latest News -->
+<section class="latest-news">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:50px;">
+      <span style="display:inline-block;background:rgba(14,165,233,0.10);color:#0ea5e9;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 18px;border-radius:50px;margin-bottom:14px;">Stay Informed</span>
+      <h2 style="font-size:34px;font-weight:800;color:#1B3C53;margin-bottom:12px;letter-spacing:-0.5px;">Latest News</h2>
+      <p style="color:#64748b;font-size:15px;max-width:500px;margin:0 auto;">Stay up to date with the latest advances in liver cancer detection and treatment.</p>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-xs-12" style="margin-bottom:24px;"><div class="news-card"><div class="news-img"><img src="/static/images/image8.jpg" alt="Understanding Liver Cancer"><span class="news-category">Research</span></div><div class="news-body"><div class="news-meta"><span><i class="fa fa-calendar"></i> Dec 15, 2024</span><span><i class="fa fa-clock-o"></i> 4 min read</span></div><h3>Understanding Liver Cancer (HCC)</h3><p>Liver cancer (HCC) is one of the most common cancers worldwide. Early diagnosis is essential for successful treatment outcomes.</p><a href="news.html" class="read-more">Read More <i class="fa fa-arrow-right"></i></a></div></div></div>
+      <div class="col-md-6 col-xs-12" style="margin-bottom:24px;"><div class="news-card"><div class="news-img"><img src="/static/images/image9.jpg" alt="Causes and Prevention"><span class="news-category">Prevention</span></div><div class="news-body"><div class="news-meta"><span><i class="fa fa-calendar"></i> Dec 12, 2024</span><span><i class="fa fa-clock-o"></i> 3 min read</span></div><h3>Causes, Risks & Prevention</h3><p>Hepatitis B, C, alcohol, and obesity increase risk significantly. Vaccination and lifestyle changes can help prevent liver cancer.</p><a href="news.html" class="read-more">Read More <i class="fa fa-arrow-right"></i></a></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-badge"><i class="fa fa-heartbeat"></i> Don't Wait — Act Now</div>
+    <h2>Liver cancer can be silent.<br>Don't wait for symptoms.</h2>
+    <p>Send us your scans and lab results. Our AI system and medical team are available 24/7 to help you.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <button onclick="handleUploadClick()" class="hero-btn-primary upload-trigger-btn"><i class="fa fa-upload" style="margin-right:8px;"></i>Upload Your Scan</button>
+      <a href="contact-us.html" class="hero-btn-ghost">Contact Our Team</a>
+    </div>
+  </div>
+</section>
+
+<!-- Departments -->
+<section class="departments">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:50px;">
+      <span style="display:inline-block;background:rgba(14,165,233,0.10);color:#0ea5e9;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 18px;border-radius:50px;margin-bottom:14px;">Expert Specialists</span>
+      <h2 style="font-size:34px;font-weight:800;color:#1B3C53;margin-bottom:12px;letter-spacing:-0.5px;">Our Departments</h2>
+      <p style="color:#64748b;font-size:15px;max-width:500px;margin:0 auto;">World-class medical departments dedicated to liver health and oncology care.</p>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-6 col-xs-12"><div class="dept-card"><div class="dept-img"><img src="/static/images/image4.jpg" alt="Hepatology Department"></div><div class="dept-body"><div class="dept-icon"><i class="fa fa-hospital-o"></i></div><h3>Hepatology Department</h3><p>Specialized in diagnosing and managing liver diseases, including viral hepatitis and liver cancer, with cutting-edge technology.</p></div></div></div>
+      <div class="col-md-6 col-sm-6 col-xs-12"><div class="dept-card"><div class="dept-img"><img src="/static/images/image6.jpg" alt="Oncology Department"></div><div class="dept-body"><div class="dept-icon"><i class="fa fa-stethoscope"></i></div><h3>Oncology Department</h3><p>Comprehensive cancer care from early detection to chemotherapy, radiation, and dedicated patient support programs.</p></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer Container -->
+<div id="footer-container"></div>
+
+<!-- Scripts -->
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/components/header.js"></script>
+<script src="/static/js/components/footer.js"></script>
+
+<script>
+// ========== FIXED JAVASCRIPT - NO CONFLICTS ==========
+
+// Global variables
+let currentSlide = 0;
+
+// Helper function for notifications
+function showNotification(message, type = 'error', title = null) {
+    const existing = document.querySelector('.notification-message');
+    if (existing) existing.remove();
+    
+    const notification = document.createElement('div');
+    notification.className = `notification-message ${type}`;
+    
+    const notificationColors = {
+        auth: '#0ea5e9',
+        info: '#0ea5e9',
+        success: '#10b981',
+        warning: '#f59e0b',
+        error: '#ef4444'
+    };
+    const bgColor = notificationColors[type] || notificationColors.info;
+    
+    notification.style.background = bgColor;
+    
+    notification.innerHTML = `
+        <div style="flex:1;">
+            <strong style="display:block; font-size: 15px;">${title || 'Notice'}</strong>
+            <p style="margin:0; font-size:13px; opacity:0.9;">${message}</p>
+        </div>
+        <button onclick="this.parentElement.remove()" style="background:none; border:none; color:white; cursor:pointer; font-size: 20px;">&times;</button>
+    `;
+    
+    document.body.appendChild(notification);
+    setTimeout(() => { if(notification.parentElement) notification.remove(); }, 5000);
+}
+
+// Check if user is admin
+async function checkIfAdmin() {
+    try {
+        const data = window.getSessionState
+            ? await window.getSessionState()
+            : await fetch('/check-session').then(response => response.json());
+        return data.is_admin === true;
+    } catch (error) {
+        console.error('Error checking admin status:', error);
+        return false;
+    }
+}
+
+// Handle upload button click
+async function handleUploadClick() {
+    let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    let isAdmin = localStorage.getItem('isAdmin') === 'true';
+
+    if (isLoggedIn && !isAdmin) {
+        const uploadSection = document.getElementById('upload-section');
+        if (uploadSection) {
+            uploadSection.scrollIntoView({ behavior: 'smooth' });
+        }
+        openFilePicker();
+        return;
+    }
+
+    // If not in localStorage, check server session (for demo mode)
+    if (!isLoggedIn) {
+        try {
+            const session = window.getSessionState
+                ? await window.getSessionState()
+                : await fetch('/check-session').then(response => response.json());
+            isLoggedIn = session.logged_in === true;
+            isAdmin = session.is_admin === true;
+            if (isLoggedIn && !localStorage.getItem('isLoggedIn')) {
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('isAdmin', session.is_admin ? 'true' : 'false');
+                localStorage.setItem('userEmail', session.user_email);
+                localStorage.setItem('userName', session.user_name);
+            }
+        } catch (e) {
+            console.error('Session check error:', e);
+        }
+    }
+
+    if (!isLoggedIn) {
+        showNotification('Please log in or register first to upload CT scans.', 'auth', 'Login Required');
+        return;
+    }
+
+    if (isAdmin) {
+        showNotification('Admin accounts cannot upload or analyze medical images. Please use a patient account.', 'auth', 'Access Denied');
+        return;
+    }
+
+    const uploadSection = document.getElementById('upload-section');
+    if (uploadSection) {
+        uploadSection.scrollIntoView({ behavior: 'smooth' });
+    }
+    openFilePicker();
+}
+
+// Handle sign up button click
+async function handleSignUpClick() {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    
+    if (isLoggedIn) {
+        const isAdmin = await checkIfAdmin();
+        if (isAdmin) {
+            showNotification('Admin accounts cannot upload scans. Please log in with a patient account.', 'auth', 'Admin Account');
+        } else {
+            showNotification('You are already registered and logged in!', 'auth', 'Already Registered');
+            setTimeout(() => {
+                document.getElementById('upload-section').scrollIntoView({ behavior: 'smooth' });
+            }, 1500);
+        }
+    } else {
+        window.location.href = 'register.html';
+    }
+}
+
+function applyRoleBasedHomeAccess(isAdmin) {
+    const uploadSection = document.getElementById('upload-section');
+    const uploadButtons = document.querySelectorAll('.upload-trigger-btn');
+    const signUpButtons = document.querySelectorAll('.sign-up-trigger-btn');
+
+    if (isAdmin) {
+        if (uploadSection) {
+            uploadSection.style.display = 'none';
+        }
+
+        uploadButtons.forEach((button) => {
+            button.innerHTML = '<i class="fa fa-dashboard" style="margin-right:8px;"></i>Open Dashboard';
+            button.onclick = () => { window.location.href = '/admin-dashboard.html'; };
+        });
+
+        signUpButtons.forEach((button) => {
+            button.innerHTML = '<i class="fa fa-dashboard" style="margin-right:8px;"></i>Open Dashboard';
+            button.onclick = () => { window.location.href = '/admin-dashboard.html'; };
+        });
+        return;
+    }
+
+    if (uploadSection) {
+        uploadSection.style.display = '';
+    }
+
+    uploadButtons.forEach((button, index) => {
+        const buttonLabels = ['Upload CT Scan', 'Get Started', 'Upload Your Scan'];
+        button.innerHTML = `<i class="fa fa-upload" style="margin-right:8px;"></i>${buttonLabels[index] || 'Upload CT Scan'}`;
+        button.onclick = handleUploadClick;
+    });
+
+    signUpButtons.forEach((button) => {
+        button.innerHTML = '<i class="fa fa-user-plus" style="margin-right:8px;"></i>Sign Up Free';
+        button.onclick = handleSignUpClick;
+    });
+}
+
+async function syncHomeAccessByRole() {
+    applyRoleBasedHomeAccess(localStorage.getItem('isAdmin') === 'true');
+
+    try {
+        const data = window.getSessionState
+            ? await window.getSessionState()
+            : await fetch('/check-session').then(response => response.json());
+        applyRoleBasedHomeAccess(data.is_admin === true);
+    } catch (error) {
+        console.error('Error syncing home access:', error);
+        applyRoleBasedHomeAccess(localStorage.getItem('isAdmin') === 'true');
+    }
+}
+
+// Hero slider functions
+function changeSlide(direction) {
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    if (!slides || slides.length === 0) return;
+    slides[currentSlide].classList.remove('active');
+    dots[currentSlide].classList.remove('active');
+    currentSlide = (currentSlide + direction + slides.length) % slides.length;
+    slides[currentSlide].classList.add('active');
+    dots[currentSlide].classList.add('active');
+}
+
+function goToSlide(index) {
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    if (!slides || slides.length === 0) return;
+    slides[currentSlide].classList.remove('active');
+    dots[currentSlide].classList.remove('active');
+    currentSlide = index;
+    slides[currentSlide].classList.add('active');
+    dots[currentSlide].classList.add('active');
+}
+
+// Auto slide
+setInterval(() => changeSlide(1), 5000);
+
+// File upload functions
+function openFilePicker() {
+    const fileInput = document.getElementById('mriFile');
+    if (!fileInput) return;
+    fileInput.value = '';
+    fileInput.click();
+}
+
+async function triggerFileUpload() {
+    let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    let isAdmin = localStorage.getItem('isAdmin') === 'true';
+
+    if (isLoggedIn && !isAdmin) {
+        openFilePicker();
+        return;
+    }
+
+    // Check server session if localStorage is empty (demo mode)
+    if (!isLoggedIn) {
+        try {
+            const session = window.getSessionState
+                ? await window.getSessionState()
+                : await fetch('/check-session').then(response => response.json());
+            isLoggedIn = session.logged_in === true;
+            isAdmin = session.is_admin === true;
+            if (isLoggedIn && !localStorage.getItem('isLoggedIn')) {
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('isAdmin', session.is_admin ? 'true' : 'false');
+                localStorage.setItem('userEmail', session.user_email);
+                localStorage.setItem('userName', session.user_name);
+            }
+        } catch (e) {
+            console.error('Session check error:', e);
+        }
+    }
+
+    if (!isLoggedIn) {
+        showNotification('Please log in first to upload scans.', 'auth', 'Login Required');
+        return;
+    }
+
+    if (isAdmin) {
+        showNotification('Admin accounts cannot upload medical images. Please use a patient account.', 'auth', 'Access Denied');
+        return;
+    }
+
+    openFilePicker();
+}
+
+function handleFileChange(input) {
+    console.log('handleFileChange called');
+    try {
+        if (!input || !input.files || input.files.length === 0) {
+            console.log('No file selected');
+            const previewDiv = document.getElementById('filePreview');
+            if (previewDiv) {
+                previewDiv.style.display = 'none';
+            }
+            return;
+        }
+
+        const file = input.files[0];
+        console.log('File selected:', file.name);
+
+        // Show file name
+        const fileNameDisplay = document.getElementById('fileName');
+        if (fileNameDisplay) {
+            fileNameDisplay.textContent = file.name + ' selected';
+            fileNameDisplay.style.color = '#10b981';
+            console.log('File name displayed');
+        }
+
+        // Show image preview
+        const previewDiv = document.getElementById('filePreview');
+        if (previewDiv && file.type.startsWith('image/')) {
+            previewDiv.style.display = 'block';
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    // Remove old image if exists
+                    let oldImg = previewDiv.querySelector('img');
+                    if (oldImg) {
+                        oldImg.remove();
+                    }
+
+                    // Create new image
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.maxWidth = '100%';
+                    img.style.maxHeight = '300px';
+                    img.style.borderRadius = '12px';
+                    img.style.marginTop = '15px';
+                    img.style.border = '3px solid #f1f5f9';
+                    img.style.boxShadow = '0 4px 6px rgba(0,0,0,0.05)';
+                    img.style.display = 'block';
+                    img.style.marginLeft = 'auto';
+                    img.style.marginRight = 'auto';
+
+                    previewDiv.appendChild(img);
+                    console.log('Image preview displayed');
+
+                } catch (err) {
+                    console.error('Error displaying preview:', err);
+                }
+            };
+            reader.readAsDataURL(file);
+        } else if (previewDiv) {
+            previewDiv.style.display = 'block';
+        }
+
+        // Show notification
+        showNotification('Scan loaded successfully. Ready for AI Analysis.', 'success', 'File Ready');
+        console.log('Notification shown');
+
+    } catch (err) {
+        console.error('Error in handleFileChange:', err);
+        showNotification('Error loading file. Please try again.', 'error', 'File Error');
+    }
+}
+
+// Submit CT scan
+async function submitCT() {
+    let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+    // If not in localStorage, check server session (for demo mode or session issues)
+    if (!isLoggedIn) {
+        try {
+            const session = window.getSessionState
+                ? await window.getSessionState()
+                : await fetch('/check-session').then(response => response.json());
+            isLoggedIn = session.logged_in === true;
+            if (isLoggedIn && !localStorage.getItem('isLoggedIn')) {
+                // Sync session to localStorage
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('isAdmin', session.is_admin ? 'true' : 'false');
+                localStorage.setItem('userEmail', session.user_email);
+                localStorage.setItem('userName', session.user_name);
+            }
+        } catch (e) {
+            console.error('Session check error:', e);
+        }
+    }
+
+    if (!isLoggedIn) {
+        showNotification('Please log in first to analyze scans.', 'auth', 'Login Required');
+        return;
+    }
+    
+    const isAdmin = await checkIfAdmin();
+    if (isAdmin) {
+        showNotification('Admin accounts cannot upload or analyze medical images. Please log in with a patient account.', 'auth', 'Access Denied');
+        return;
+    }
+
+    const fileInput = document.getElementById('mriFile');
+    if (!fileInput || fileInput.files.length === 0) {
+        showNotification('Please upload a CT scan image first.', 'error', 'No File Found');
+        return;
+    }
+
+    const file = fileInput.files[0];
+    const formData = new FormData();
+    formData.append('image', file);
+
+    const btn = document.querySelector('.upload-submit');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Analyzing...';
+    btn.disabled = true;
+
+    try {
+        const response = await fetch('/api/predict', {
+            method: 'POST',
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            if (data.is_duplicate) {
+                showNotification('⚠️ This image has already been scanned! Showing previous result.', 'warning', 'Duplicate Detected');
+            } else {
+                showNotification('✅ Analysis complete! Redirecting to results...', 'success', 'Analysis Done');
+            }
+
+            setTimeout(() => {
+                window.location.href = `/result.html?id=${data.prediction_id}`;
+            }, 2000);
+        } else {
+            showNotification(data.message || 'Analysis failed', 'error', 'Error');
+        }
+    } catch (error) {
+        console.error('Analysis error:', error);
+        showNotification('Server error. Please try again.', 'error', 'Connection Error');
+    } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }
+}
+
+// Initialize page
+document.addEventListener('DOMContentLoaded', function() {
+    syncHomeAccessByRole();
+
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('mriFile');
+
+    // Simple file change handler
+    if (fileInput) {
+        fileInput.addEventListener('change', function() {
+            console.log('File change event fired');
+            handleFileChange(this);
+        });
+    }
+
+    // Drag and drop
+    if (uploadArea) {
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.background = "#f0f9ff";
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.background = "transparent";
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.background = "transparent";
+
+            if (e.dataTransfer.files.length > 0 && fileInput) {
+                fileInput.files = e.dataTransfer.files;
+                handleFileChange(fileInput);
+            }
+        });
+    }
+});
+</script>
+</body>
+</html>

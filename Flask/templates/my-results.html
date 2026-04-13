@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Results - Liver Care</title>
+  <meta name="author" content="Liver Care">
+
+  <!-- FAVICON -->
+  <link href="ico/favicon.png" rel="shortcut icon">
+
+  <!-- CSS -->
+  <link href="/static/css/ionicons.min.css" rel="stylesheet">
+  <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/css/style.css" rel="stylesheet">
+  <link href="/static/css/shared.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <style>
+    /* Additional styles for my-results page */
+    .results-section {
+      padding: 60px 0 80px;
+      background: #f1f5f9;
+      min-height: calc(100vh - 200px);
+    }
+
+    .results-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Header Card */
+    .results-header-card {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      margin-bottom: 35px;
+    }
+
+    .results-header-top {
+      background: linear-gradient(135deg, #1B3C53 0%, #0ea5e9 100%);
+      padding: 30px 35px;
+      color: white;
+    }
+
+    .results-header-top h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      font-weight: 700;
+      color: #ffffff; 
+    }
+
+    .results-header-top h1 i {
+      margin-right: 12px;
+    }
+
+    .results-header-top p {
+      margin: 0;
+      opacity: 0.85;
+      font-size: 14px;
+      color: #ffffff;  
+    }
+
+    .patient-stats-bar {
+      background: #fff;
+      padding: 18px 35px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .patient-info-group {
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    .patient-info-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: #1B3C53;
+    }
+
+    .patient-info-item i {
+      color: #0ea5e9;
+      font-size: 16px;
+      width: 20px;
+    }
+
+    .patient-info-item strong {
+      font-weight: 700;
+    }
+
+    .refresh-btn {
+      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .refresh-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+    }
+
+    /* Results Grid */
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 25px;
+    }
+
+    .result-card {
+      background: #fff;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s;
+    }
+
+    .result-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .result-card-header {
+      padding: 18px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid #f0f2f5;
+    }
+
+    .result-card-header.benign {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      border-left: 4px solid #10b981;
+    }
+
+    .result-card-header.malignant {
+      background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+      border-left: 4px solid #ef4444;
+    }
+
+    .result-title h4 {
+      margin: 0 0 5px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #1B3C53;
+    }
+
+    .result-date {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    .result-date i {
+      margin-right: 4px;
+    }
+
+    .result-badge {
+      padding: 5px 14px;
+      border-radius: 50px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .result-badge.benign {
+      background: #10b981;
+      color: white;
+    }
+
+    .result-badge.malignant {
+      background: #ef4444;
+      color: white;
+    }
+
+    .result-card-body {
+      padding: 18px 22px;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      font-size: 12px;
+      color: #94a3b8;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .info-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1B3C53;
+    }
+
+    .info-value.cancer-value {
+      color: #ef4444;
+    }
+
+    .info-value.benign-value {
+      color: #10b981;
+    }
+
+    .view-detail-btn {
+      display: block;
+      text-align: center;
+      padding: 12px;
+      background: #f8fafc;
+      color: #0ea5e9;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.3s;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .view-detail-btn:hover {
+      background: #0ea5e9;
+      color: white;
+      text-decoration: none;
+    }
+
+    /* No Results */
+    .no-results-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 60px 40px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .no-results-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .no-results-icon i {
+      font-size: 36px;
+      color: #94a3b8;
+    }
+
+    .no-results-card h3 {
+      color: #1B3C53;
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .no-results-card p {
+      color: #64748b;
+      margin-bottom: 25px;
+    }
+
+    .upload-btn {
+      background: linear-gradient(135deg, #0ea5e9, #0284c7);
+      color: white;
+      padding: 12px 30px;
+      border-radius: 50px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .upload-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4);
+      color: white;
+      text-decoration: none;
+    }
+
+    /* Loading */
+    .loading-container {
+      text-align: center;
+      padding: 80px;
+      background: white;
+      border-radius: 20px;
+    }
+
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid #e2e8f0;
+      border-top-color: #0ea5e9;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+      .results-header-top {
+        padding: 20px 25px;
+      }
+      .patient-stats-bar {
+        padding: 15px 25px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .results-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header Container -->
+  <div id="header-container"></div>
+
+  <!-- Inner Header -->
+  <section class="inner-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <h1 style="color: #fff;">My Results</h1>
+          <p style="color: rgba(255,255,255,0.85);">View your CT scan analysis history</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results Section -->
+  <section class="results-section">
+    <div class="container">
+      <div class="results-wrapper">
+
+        <!-- Results Header Card -->
+        <div class="results-header-card">
+          <div class="results-header-top">
+            <h1>
+              <i class="fa fa-history"></i> My Analysis Results
+            </h1>
+            <p>Review all your past liver cancer screening results</p>
+          </div>
+          <div class="patient-stats-bar" id="patientStatsBar">
+            <div class="patient-info-group" id="patientInfo">
+              <div class="patient-info-item">
+                <i class="fa fa-user"></i>
+                <span><strong id="patientName">-</strong></span>
+              </div>
+              <div class="patient-info-item">
+                <i class="fa fa-id-card"></i>
+                <span><strong id="patientID">-</strong></span>
+              </div>
+              <div class="patient-info-item">
+                <i class="fa fa-calendar"></i>
+                <span><strong id="patientAge">-</strong> years</span>
+              </div>
+              <div class="patient-info-item">
+                <i class="fa fa-venus-mars"></i>
+                <span><strong id="patientGender">-</strong></span>
+              </div>
+            </div>
+            <button class="refresh-btn" onclick="loadResults()">
+              <i class="fa fa-refresh"></i> Refresh
+            </button>
+          </div>
+        </div>
+
+        <!-- Results Grid Container -->
+        <div id="resultsContainer">
+          <div class="loading-container">
+            <div class="loading-spinner"></div>
+            <p style="color: #64748b;">Loading your results...</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Container -->
+  <div id="footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="/static/js/jquery.min.js"></script>
+  <script src="/static/js/bootstrap.min.js"></script>
+  <script src="/static/js/components/header.js"></script>
+  <script src="/static/js/components/footer.js"></script>
+
+  <script>
+    let allResults = [];
+
+    // Format date nicely
+    function formatDate(dateString) {
+      if (!dateString) return 'N/A';
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+    function updatePatientHeader(sessionData, latestResult = null) {
+      document.getElementById('patientName').textContent =
+        latestResult?.user_name || sessionData.user_name || 'Patient';
+      document.getElementById('patientID').textContent =
+        latestResult?.patient_id || sessionData.patient_id || '-';
+      document.getElementById('patientAge').textContent =
+        latestResult?.age || sessionData.age || '-';
+      document.getElementById('patientGender').textContent =
+        latestResult?.gender || sessionData.gender || '-';
+    }
+
+    // Load user session and results
+    async function loadResults() {
+      try {
+        // Show loading
+        document.getElementById('resultsContainer').innerHTML = `
+          <div class="loading-container">
+            <div class="loading-spinner"></div>
+            <p style="color: #64748b;">Loading your results...</p>
+          </div>
+        `;
+
+        // Check session first
+        const sessionData = window.getSessionState
+          ? await window.getSessionState()
+          : await fetch('/check-session').then(response => response.json());
+
+        if (!sessionData.logged_in) {
+          window.location.href = '/login.html';
+          return;
+        }
+
+        // Show session info immediately, then replace with the latest saved result if available
+        updatePatientHeader(sessionData);
+
+        // Fetch results
+        const response = await fetch('/api/my-results?t=' + new Date().getTime());
+        const data = await response.json();
+
+        console.log('[loadResults] Response:', data);
+
+        if (!data.success) {
+          showError(data.message || 'Unable to load results');
+          return;
+        }
+
+        if (!data.results || data.results.length === 0) {
+          showNoResults();
+          return;
+        }
+
+        allResults = data.results;
+        updatePatientHeader(sessionData, allResults[0]);
+        displayResults(allResults);
+
+      } catch (error) {
+        console.error('[loadResults] Error:', error);
+        showError('An error occurred while loading results');
+      }
+    }
+
+    function displayResults(results) {
+      let html = '<div class="results-grid">';
+
+      results.forEach((result, index) => {
+        const pred = result.predictions;
+        const overallStatus = pred?.overall_status || 'NORMAL';
+        const classification = pred?.cancer_stage?.classification || 'Benign';
+        const stage = pred?.cancer_stage?.stage || 'N/A';
+        const stageNum = pred?.cancer_stage?.stage_num;
+        const tumorSize = pred?.cancer_stage?.tumor_size;
+        const location = pred?.tumor_location?.location || 'Not specified';
+        const createdDate = result.created_at;
+        const predictionId = result.id;
+
+        const isCancer = (classification === 'Malignant' || overallStatus === 'ABNORMAL' || overallStatus === 'CANCER');
+        const headerClass = isCancer ? 'malignant' : 'benign';
+        const badgeClass = isCancer ? 'malignant' : 'benign';
+        const badgeText = isCancer ? 'Malignant' : 'Benign';
+        
+        const stageDisplay = (stageNum !== undefined && stageNum !== null) ? `Stage ${stageNum}` : stage;
+        const tumorSizeDisplay = tumorSize && tumorSize > 0 ? `${parseFloat(tumorSize).toFixed(2)} mm` : 'Not detected';
+
+        html += `
+          <div class="result-card">
+            <div class="result-card-header ${headerClass}">
+              <div class="result-title">
+                <h4>${stageDisplay}</h4>
+                <div class="result-date">
+                  <i class="fa fa-calendar"></i> ${formatDate(createdDate)}
+                </div>
+              </div>
+              <div class="result-badge ${badgeClass}">${badgeText}</div>
+            </div>
+            <div class="result-card-body">
+              <div class="info-row">
+                <span class="info-label">Classification</span>
+                <span class="info-value ${isCancer ? 'cancer-value' : 'benign-value'}">${classification}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Tumor Size</span>
+                <span class="info-value">${tumorSizeDisplay}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Location</span>
+                <span class="info-value">${location}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Scan ID</span>
+                <span class="info-value">${predictionId.substring(0, 8)}...</span>
+              </div>
+            </div>
+            <a href="/result.html?id=${predictionId}" class="view-detail-btn">
+              <i class="fa fa-arrow-right"></i> View Full Report
+            </a>
+          </div>
+        `;
+      });
+
+      html += '</div>';
+      document.getElementById('resultsContainer').innerHTML = html;
+    }
+
+    function showNoResults() {
+      document.getElementById('resultsContainer').innerHTML = `
+        <div class="no-results-card">
+          <div class="no-results-icon">
+            <i class="fa fa-inbox"></i>
+          </div>
+          <h3>No Results Yet</h3>
+          <p>You haven't uploaded any CT scans for analysis yet.<br>Upload your first scan to get started.</p>
+          <a href="/index.html" class="upload-btn">
+            <i class="fa fa-upload"></i> Upload Your First Scan
+          </a>
+        </div>
+      `;
+    }
+
+    function showError(message) {
+      document.getElementById('resultsContainer').innerHTML = `
+        <div class="no-results-card">
+          <div class="no-results-icon">
+            <i class="fa fa-exclamation-triangle"></i>
+          </div>
+          <h3>Error Loading Results</h3>
+          <p>${message}</p>
+          <button onclick="loadResults()" class="upload-btn" style="background: #ef4444;">
+            <i class="fa fa-refresh"></i> Try Again
+          </button>
+        </div>
+      `;
+    }
+
+    // Load results on page load
+    document.addEventListener('DOMContentLoaded', loadResults);
+  </script>
+
+</body>
+
+</html>

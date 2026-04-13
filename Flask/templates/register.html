@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up - Liver Care</title>
+<meta name="author" content="Liver Care">
+
+<!-- FAVICON -->
+<link href="ico/favicon.png" rel="shortcut icon">
+
+<!-- CSS -->
+<link href="/static/css/ionicons.min.css" rel="stylesheet">
+<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+<link href="/static/css/shared.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  background: #f1f5f9;
+  min-height: 100vh;
+  display: flex;
+  align-items: stretch;
+}
+
+.auth-wrapper {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* ---- Left Panel ---- */
+.auth-left {
+  flex: 0 0 38%;
+  background: linear-gradient(155deg, #0f172a 0%, #1B3C53 50%, #0ea5e9 100%);
+  padding: 50px 45px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-left::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -80px;
+  width: 340px; height: 340px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.auth-left::after {
+  content: '';
+  position: absolute;
+  bottom: -120px; left: -60px;
+  width: 400px; height: 400px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.auth-left-logo a { display: inline-block; position: relative; z-index: 2; }
+.auth-left-logo img { height: 48px; width: auto; }
+
+.auth-left-content {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 0 30px;
+}
+
+.auth-left-content h2 {
+  color: #fff;
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.25;
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+}
+
+.auth-left-content h2 span { color: #38bdf8; }
+
+.auth-left-content p {
+  color: rgba(255,255,255,0.70);
+  font-size: 14px;
+  line-height: 1.8;
+  margin-bottom: 32px;
+}
+
+.feature-list { list-style: none; padding: 0; margin: 0; }
+
+.feature-list li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: rgba(255,255,255,0.85);
+  font-size: 13px;
+  margin-bottom: 14px;
+  font-weight: 500;
+}
+
+.feature-list li .feat-icon {
+  width: 36px; height: 36px;
+  min-width: 36px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; color: #38bdf8;
+}
+
+.auth-left-footer { position: relative; z-index: 2; }
+.auth-left-footer p { color: rgba(255,255,255,0.40); font-size: 12px; }
+
+/* ---- Right Panel ---- */
+.auth-right {
+  flex: 1;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 36px;
+  overflow-y: auto;
+}
+
+.auth-form-wrap {
+  width: 100%;
+  max-width: 520px;
+}
+
+.form-header {
+  margin-bottom: 28px;
+}
+
+.form-header h1 {
+  color: #0f172a;
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 6px;
+  letter-spacing: -0.5px;
+}
+
+.form-header p {
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* Form Grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-grid .full { grid-column: 1 / -1; }
+
+.field-group { margin-bottom: 0; }
+
+.field-group label {
+  display: block;
+  color: #374151;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  letter-spacing: 0.2px;
+}
+
+.field-wrap { position: relative; }
+
+.field-wrap .field-icon {
+  position: absolute;
+  left: 14px; top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.field-wrap input,
+.field-wrap select {
+  width: 100%;
+  padding: 12px 14px 12px 40px;
+  border: 2px solid #e2e8f0;
+  border-radius: 11px;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  color: #0f172a;
+  background: #f8fafc;
+  transition: all 0.25s;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.field-wrap input:focus,
+.field-wrap select:focus {
+  border-color: #0ea5e9;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(14,165,233,0.12);
+}
+
+.field-wrap input::placeholder { color: #94a3b8; font-weight: 400; }
+
+.field-wrap select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2364748b' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-color: #f8fafc;
+  padding-right: 36px;
+}
+
+.field-wrap select:focus { background-color: #fff; }
+
+.toggle-pass {
+  position: absolute;
+  right: 14px; top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #94a3b8;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.toggle-pass:hover { color: #0ea5e9; }
+
+/* Terms */
+.terms-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 20px 0;
+  padding: 14px 16px;
+  background: #f8fafc;
+  border-radius: 11px;
+  border: 1px solid #e2e8f0;
+}
+
+.terms-row input[type="checkbox"] {
+  width: 17px; height: 17px;
+  min-width: 17px;
+  margin-top: 1px;
+  cursor: pointer;
+  accent-color: #0ea5e9;
+}
+
+.terms-row label {
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.6;
+  cursor: pointer;
+}
+
+.terms-row label a {
+  color: #0ea5e9;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.terms-row label a:hover { text-decoration: underline; }
+
+/* Submit */
+.register-btn {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 8px 25px rgba(14,165,233,0.35);
+  letter-spacing: 0.3px;
+}
+
+.register-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(14,165,233,0.45);
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 20px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.login-link a {
+  color: #0ea5e9;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.login-link a:hover { color: #0284c7; text-decoration: underline; }
+
+.back-home {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.back-home a {
+  color: #94a3b8;
+  font-size: 13px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s;
+}
+
+.back-home a:hover { color: #0ea5e9; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .auth-wrapper { flex-direction: column; }
+  .auth-left { flex: none; padding: 36px 28px; min-height: auto; }
+  .auth-left-content { padding: 28px 0 18px; }
+  .auth-left-content h2 { font-size: 24px; }
+  .auth-right { padding: 36px 22px; }
+}
+
+@media (max-width: 600px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .form-grid .full { grid-column: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="auth-wrapper">
+
+  <!-- Left Panel -->
+  <div class="auth-left">
+    <div class="auth-left-logo">
+      <a href="index.html">
+        <img src="/static/images/logo-white.png" alt="Liver Care">
+      </a>
+    </div>
+
+    <div class="auth-left-content">
+      <h2>Join <span>Liver Care</span><br>Today</h2>
+      <p>Create your free account and get AI-powered liver cancer screening from anywhere, at any time.</p>
+
+      <ul class="feature-list">
+        <li>
+          <div class="feat-icon"><i class="fa fa-shield"></i></div>
+          Secure &amp; protected platform
+        </li>
+        <li>
+          <div class="feat-icon"><i class="fa fa-bolt"></i></div>
+          AI analysis results in minutes
+        </li>
+        <li>
+          <div class="feat-icon"><i class="fa fa-user-md"></i></div>
+          Reviewed by certified medical team
+        </li>
+      </ul>
+    </div>
+
+    <div class="auth-left-footer">
+      <p>&copy; 2025 Liver Care. All rights reserved.</p>
+    </div>
+  </div>
+
+  <!-- Right Panel -->
+  <div class="auth-right">
+    <div class="auth-form-wrap">
+
+      <div class="form-header">
+        <h1>Create Account</h1>
+        <p>Fill in your details to get started</p>
+      </div>
+
+      <form id="registerForm" autocomplete="off">
+        <div class="form-grid">
+
+          <div class="field-group">
+            <label>Full Name</label>
+            <div class="field-wrap">
+              <i class="fa fa-user field-icon"></i>
+              <input type="text" name="full_name" placeholder="Enter your full name" autocomplete="off" required>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label>Age</label>
+            <div class="field-wrap">
+              <i class="fa fa-calendar field-icon"></i>
+              <input type="number" name="age" placeholder="Your age" min="1" max="150" autocomplete="off" required>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label>Gender</label>
+            <div class="field-wrap">
+              <i class="fa fa-venus-mars field-icon"></i>
+              <select name="gender" required>
+                <option value="">Select gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label>Email Address</label>
+            <div class="field-wrap">
+              <i class="fa fa-envelope field-icon"></i>
+              <input type="email" name="email" placeholder="you@example.com" autocomplete="off" required>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label>Phone Number</label>
+            <div class="field-wrap">
+              <i class="fa fa-phone field-icon"></i>
+              <input type="tel" name="phone" placeholder="Enter phone number" autocomplete="off" required>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label>Password</label>
+            <div class="field-wrap">
+              <i class="fa fa-lock field-icon"></i>
+              <input type="password" id="password" name="password" placeholder="Create a password" autocomplete="new-password" required>
+              <span class="toggle-pass" onclick="togglePassword('password', this)">
+                <i class="fa fa-eye"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="field-group full">
+            <label>Confirm Password</label>
+            <div class="field-wrap">
+              <i class="fa fa-lock field-icon"></i>
+              <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password" autocomplete="new-password" required>
+              <span class="toggle-pass" onclick="togglePassword('confirm_password', this)">
+                <i class="fa fa-eye"></i>
+              </span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="terms-row">
+          <input type="checkbox" id="terms" required>
+          <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+        </div>
+
+        <button type="submit" class="register-btn">
+          <i class="fa fa-user-plus" style="margin-right:8px;"></i>Create Account
+        </button>
+
+        <div class="login-link">
+          Already have an account? <a href="login.html">Sign In</a>
+        </div>
+      </form>
+
+      <div class="back-home">
+        <a href="index.html"><i class="fa fa-arrow-left"></i> Back to Home</a>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ========== UPDATED JAVASCRIPT ONLY - NO HTML/CSS CHANGES ==========
+
+function togglePassword(inputId, btn) {
+  var input = document.getElementById(inputId);
+  var icon = btn.querySelector('i');
+  input.type = input.type === 'password' ? 'text' : 'password';
+  icon.className = input.type === 'password' ? 'fa fa-eye' : 'fa fa-eye-slash';
+}
+
+function showNotification(message, type) {
+  // Remove any existing modal
+  var existing = document.getElementById('notificationModal');
+  if (existing) existing.remove();
+  
+  // Create overlay
+  var overlay = document.createElement('div');
+  overlay.id = 'notificationModal';
+  overlay.style.position = 'fixed';
+  overlay.style.top = '0';
+  overlay.style.left = '0';
+  overlay.style.width = '100%';
+  overlay.style.height = '100%';
+  overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+  overlay.style.display = 'flex';
+  overlay.style.alignItems = 'center';
+  overlay.style.justifyContent = 'center';
+  overlay.style.zIndex = '10000';
+  overlay.style.animation = 'fadeIn 0.3s ease-in';
+  
+  // Create modal box
+  var modal = document.createElement('div');
+  modal.style.backgroundColor = 'white';
+  modal.style.borderRadius = '15px';
+  modal.style.padding = '50px';
+  modal.style.maxWidth = '500px';
+  modal.style.width = '90%';
+  modal.style.textAlign = 'center';
+  modal.style.boxShadow = '0 10px 40px rgba(0, 0, 0, 0.3)';
+  modal.style.animation = 'slideUp 0.3s ease-out';
+  
+  // Icon
+  var icon = document.createElement('div');
+  icon.style.fontSize = '60px';
+  icon.style.marginBottom = '20px';
+  icon.innerHTML = type === 'success' 
+    ? '<i class="fa fa-check-circle" style="color: #10b981;"></i>'
+    : '<i class="fa fa-exclamation-circle" style="color: #ef4444;"></i>';
+  
+  // Title
+  var title = document.createElement('h2');
+  title.style.color = type === 'success' ? '#10b981' : '#ef4444';
+  title.style.fontSize = '24px';
+  title.style.fontWeight = '600';
+  title.style.marginBottom = '15px';
+  title.style.fontFamily = 'Poppins, sans-serif';
+  title.innerHTML = type === 'success' ? 'Success!' : 'Error';
+  
+  // Message
+  var msgElement = document.createElement('p');
+  msgElement.style.color = '#333333';
+  msgElement.style.fontSize = '16px';
+  msgElement.style.lineHeight = '1.6';
+  msgElement.style.marginBottom = '30px';
+  msgElement.style.fontFamily = 'Poppins, sans-serif';
+  msgElement.innerHTML = message;
+  
+  // Button
+  var btn = document.createElement('button');
+  btn.innerHTML = type === 'success' ? 'Continue' : 'Dismiss';
+  btn.style.padding = '12px 40px';
+  btn.style.fontSize = '16px';
+  btn.style.fontWeight = '600';
+  btn.style.border = 'none';
+  btn.style.borderRadius = '8px';
+  btn.style.cursor = 'pointer';
+  btn.style.fontFamily = 'Poppins, sans-serif';
+  btn.style.transition = 'all 0.3s ease';
+  btn.style.backgroundColor = type === 'success' ? '#10b981' : '#ef4444';
+  btn.style.color = 'white';
+  btn.onmouseover = function() { this.style.transform = 'translateY(-2px)'; this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)'; };
+  btn.onmouseout = function() { this.style.transform = 'translateY(0)'; this.style.boxShadow = 'none'; };
+  btn.onclick = function() { overlay.remove(); };
+  
+  // Add styles for animations
+  if (!document.querySelector('style[data-modal-animations]')) {
+    var style = document.createElement('style');
+    style.setAttribute('data-modal-animations', 'true');
+    style.innerHTML = `
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes slideUp {
+        from { transform: translateY(30px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  // Assemble modal
+  modal.appendChild(icon);
+  modal.appendChild(title);
+  modal.appendChild(msgElement);
+  modal.appendChild(btn);
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+  
+  // Auto-close success messages after 2.5 seconds
+  if (type === 'success') {
+    setTimeout(function() { 
+      if (overlay && overlay.parentNode) overlay.remove(); 
+    }, 2500);
+  }
+}
+
+document.getElementById('registerForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  
+  var password = document.getElementById('password').value;
+  var confirmPassword = document.getElementById('confirm_password').value;
+  
+  if (password.length < 8) {
+    showNotification('Password must be at least 8 characters!', 'error');
+    return;
+  }
+
+  if (!/[A-Z]/.test(password)) {
+    showNotification('Password must contain at least one uppercase letter!', 'error');
+    return;
+  }
+
+  if (!/[a-z]/.test(password)) {
+    showNotification('Password must contain at least one lowercase letter!', 'error');
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    showNotification('Passwords do not match!', 'error');
+    return;
+  }
+  
+  var terms = document.getElementById('terms');
+  if (!terms.checked) {
+    showNotification('Please agree to the Terms of Service and Privacy Policy', 'error');
+    return;
+  }
+  
+  var formData = new FormData(this);
+  var btn = this.querySelector('.register-btn');
+  var originalText = btn.innerHTML;
+  btn.innerHTML = '<i class="fa fa-spinner fa-spin" style="margin-right:8px;"></i>Creating Account...';
+  btn.disabled = true;
+  
+  try {
+    var response = await fetch('/register.html', {
+      method: 'POST',
+      body: formData
+    });
+    
+    var data = await response.json();
+    
+    if (data.success) {
+      showNotification('Verification code sent to your email!', 'success');
+
+      setTimeout(function() {
+        window.location.href = data.redirect;
+      }, 1500);
+    } else {
+      showNotification(data.message || 'Registration failed', 'error');
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+    }
+  } catch (error) {
+    console.error('Registration error:', error);
+    showNotification('Server error. Please try again.', 'error');
+    btn.innerHTML = originalText;
+    btn.disabled = false;
+  }
+});
+</script>
+
+</body>
+</html>

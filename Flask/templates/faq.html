@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Help & FAQ - Liver Care</title>
+<meta name="author" content="Liver Care">
+<meta name="description" content="Frequently asked questions about liver cancer detection">
+
+<!-- FAVICON -->
+<link href="ico/favicon.png" rel="shortcut icon">
+
+<!-- CSS -->
+<link href="/static/css/ionicons.min.css" rel="stylesheet">
+<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+<link href="/static/css/style.css" rel="stylesheet">
+<link href="/static/css/shared.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+.faq-section {
+  padding: 80px 0;
+  background: #f8fafc;
+}
+
+.faq-layout {
+  display: flex;
+  gap: 36px;
+  align-items: flex-start;
+}
+
+/* Sidebar */
+.faq-sidebar {
+  flex: 0 0 250px;
+  position: sticky;
+  top: 90px;
+}
+
+.faq-sidebar-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 26px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  margin-bottom: 18px;
+}
+
+.faq-sidebar-card h4 {
+  color: #1B3C53;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #f1f5f9;
+}
+
+.faq-category-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 13px;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  margin-bottom: 4px;
+}
+
+.faq-category-btn:hover,
+.faq-category-btn.active {
+  background: rgba(14,165,233,0.09);
+  color: #0ea5e9;
+  font-weight: 600;
+}
+
+/* Main FAQ */
+.faq-main { flex: 1; }
+
+.faq-search {
+  position: relative;
+  margin-bottom: 28px;
+}
+
+.faq-search i {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  font-size: 16px;
+}
+
+.faq-search input {
+  width: 100%;
+  padding: 15px 20px 15px 48px;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  font-size: 15px;
+  font-family: 'Poppins', sans-serif;
+  color: #1B3C53;
+  background: #fff;
+  transition: all 0.25s;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.faq-search input:focus {
+  outline: none;
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 3px rgba(14,165,233,0.12);
+}
+
+.faq-search input::placeholder { color: #94a3b8; }
+
+/* FAQ Items */
+.faq-item {
+  background: #fff;
+  border-radius: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.04);
+  transition: all 0.3s;
+}
+
+.faq-item:hover { box-shadow: 0 6px 22px rgba(0,0,0,0.09); }
+.faq-item.active { box-shadow: 0 6px 22px rgba(14,165,233,0.12); border-color: rgba(14,165,233,0.2); }
+
+.faq-question {
+  padding: 20px 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  transition: background 0.2s;
+  user-select: none;
+}
+
+.faq-question:hover { background: #f8fafc; }
+.faq-item.active .faq-question { background: rgba(14,165,233,0.04); }
+
+.faq-q-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.faq-q-num {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  background: rgba(14,165,233,0.1);
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0ea5e9;
+  font-size: 13px;
+  font-weight: 700;
+  transition: all 0.3s;
+}
+
+.faq-item.active .faq-q-num {
+  background: #0ea5e9;
+  color: #fff;
+}
+
+.faq-question h3 {
+  color: #1B3C53;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.faq-toggle-icon {
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  border-radius: 50%;
+  background: rgba(14,165,233,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0ea5e9;
+  font-size: 12px;
+  transition: all 0.3s;
+}
+
+.faq-item.active .faq-toggle-icon {
+  background: #0ea5e9;
+  color: #fff;
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.faq-item.active .faq-answer { max-height: 600px; }
+
+.faq-answer-content {
+  padding: 16px 24px 22px 72px;
+  color: #64748b;
+  line-height: 1.85;
+  font-size: 14px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.faq-answer-content ul {
+  margin: 10px 0;
+  padding-left: 20px;
+  list-style: none;
+}
+
+.faq-answer-content ul li {
+  margin-bottom: 8px;
+  padding-left: 22px;
+  position: relative;
+}
+
+.faq-answer-content ul li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #10b981;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+/* Help Card */
+.help-card {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  border-radius: 20px;
+  padding: 45px 40px;
+  text-align: center;
+  margin-top: 36px;
+  position: relative;
+  overflow: hidden;
+}
+
+.help-card::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -40px;
+  width: 200px; height: 200px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 50%;
+}
+
+.help-card .help-icon {
+  width: 70px; height: 70px;
+  background: rgba(255,255,255,0.18);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px;
+  position: relative; z-index: 1;
+}
+
+.help-card .help-icon i { font-size: 28px; color: #fff; }
+
+.help-card h3 {
+  font-size: 24px; font-weight: 800;
+  color: #fff; margin-bottom: 12px;
+  position: relative; z-index: 1;
+}
+
+.help-card p {
+  font-size: 15px; color: rgba(255,255,255,0.85);
+  margin-bottom: 28px; max-width: 380px;
+  margin-left: auto; margin-right: auto;
+  position: relative; z-index: 1;
+}
+
+.help-card a {
+  display: inline-block;
+  background: #fff; color: #0ea5e9;
+  padding: 13px 32px; border-radius: 50px;
+  text-decoration: none; font-weight: 700;
+  font-size: 14px; transition: all 0.3s;
+  position: relative; z-index: 1;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.help-card a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+  color: #0284c7; text-decoration: none;
+}
+
+@media (max-width: 900px) {
+  .faq-layout { flex-direction: column; }
+  .faq-sidebar { flex: none; position: static; width: 100%; }
+}
+
+@media (max-width: 768px) {
+  .faq-answer-content { padding-left: 24px; }
+  .help-card { padding: 32px 22px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Header Container -->
+<div id="header-container"></div>
+
+<!-- Inner Header -->
+<section class="inner-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <h1>Help &amp; FAQ</h1>
+        <p>Find answers to common questions about liver cancer detection</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section">
+  <div class="container">
+    <div class="faq-layout">
+
+      <!-- Sidebar -->
+      <div class="faq-sidebar">
+<div class="faq-sidebar-card">
+          <h4><i class="fa fa-phone" style="margin-right:8px;color:#0ea5e9;"></i>Need Help?</h4>
+          <p style="color:#64748b;font-size:13px;line-height:1.7;margin-bottom:16px;">
+            Can't find your answer? Contact our support team directly.
+          </p>
+          <a href="contact-us.html" style="display:block;background:linear-gradient(135deg,#0ea5e9 0%,#0284c7 100%);color:#fff;text-align:center;padding:12px 20px;border-radius:10px;font-weight:700;font-size:13px;text-decoration:none;">
+            <i class="fa fa-envelope" style="margin-right:7px;"></i>Contact Support
+          </a>
+        </div>
+      </div>
+
+      <!-- Main FAQ -->
+      <div class="faq-main">
+        <div class="faq-search">
+          <i class="fa fa-search"></i>
+          <input type="text" placeholder="Search questions..." id="faqSearch">
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <div class="faq-q-left">
+              <div class="faq-q-num">1</div>
+              <h3>How does early liver cancer detection work?</h3>
+            </div>
+            <div class="faq-toggle-icon"><i class="fa fa-chevron-down"></i></div>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              Our system uses advanced AI to analyze CT scan images and identify signs of liver cancer:
+              <ul>
+                <li>Upload your CT scan images through our secure platform</li>
+                <li>AI algorithms analyze the images for abnormalities</li>
+                <li>Results are typically available within minutes</li>
+                <li>Our medical team reviews all results for accuracy</li>
+              </ul>
+              Early detection significantly increases the chances of successful treatment.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <div class="faq-q-left">
+              <div class="faq-q-num">2</div>
+              <h3>What types of scans can I upload?</h3>
+            </div>
+            <div class="faq-toggle-icon"><i class="fa fa-chevron-down"></i></div>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              We currently accept the following:
+              <ul>
+                <li>CT (Computed Tomography) scans</li>
+                <li>Ultrasound images</li>
+              </ul>
+              Supported file formats are JPG and PNG. Please ensure your images are clear and properly oriented.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <div class="faq-q-left">
+              <div class="faq-q-num">3</div>
+              <h3>Is my information secure?</h3>
+            </div>
+            <div class="faq-toggle-icon"><i class="fa fa-chevron-down"></i></div>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              Yes, we take data security very seriously. All your medical information is:
+              <ul>
+                <li>Encrypted using industry-standard protocols</li>
+                <li>Stored securely on protected servers</li>
+                <li>Never shared with third parties without your consent</li>
+                <li>Compliant with healthcare data protection regulations</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <div class="faq-q-left">
+              <div class="faq-q-num">4</div>
+              <h3>How accurate is the detection?</h3>
+            </div>
+            <div class="faq-toggle-icon"><i class="fa fa-chevron-down"></i></div>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              Our AI system is trained on thousands of cases with high accuracy. However:
+              <ul>
+                <li>This is a screening tool, not a definitive diagnosis</li>
+                <li>All positive results should be confirmed by a medical professional</li>
+                <li>Results are always reviewed by our certified medical team</li>
+              </ul>
+              Always consult with your doctor for proper medical advice.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <div class="faq-q-left">
+              <div class="faq-q-num">5</div>
+              <h3>How do I create an account?</h3>
+            </div>
+            <div class="faq-toggle-icon"><i class="fa fa-chevron-down"></i></div>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              Creating an account takes less than 2 minutes:
+              <ul>
+                <li>Click "Register" in the top navigation</li>
+                <li>Fill in your personal information</li>
+                <li>Create a secure password</li>
+                <li>Agree to the terms of service</li>
+              </ul>
+              Once registered, you can immediately upload scans and receive analysis.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <div class="faq-q-left">
+              <div class="faq-q-num">6</div>
+              <h3>What happens after I upload my scan?</h3>
+            </div>
+            <div class="faq-toggle-icon"><i class="fa fa-chevron-down"></i></div>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              After uploading your CT scan:
+              <ul>
+                <li>Our AI system analyzes the images immediately</li>
+                <li>Preliminary results are available within minutes</li>
+                <li>A detailed report is generated automatically</li>
+                <li>Our medical team reviews and validates all results</li>
+                <li>Results are available in your profile dashboard</li>
+              </ul>
+              For positive findings, we recommend consulting with a healthcare provider.
+            </div>
+          </div>
+        </div>
+
+        <!-- Help Card -->
+        <div class="help-card">
+          <div class="help-icon"><i class="fa fa-headphones"></i></div>
+          <h3>Still Have Questions?</h3>
+          <p>Our expert support team is available 24/7 to help you with any concerns.</p>
+          <a href="contact-us.html"><i class="fa fa-arrow-right" style="margin-right:8px;"></i>Contact Our Team</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer Container -->
+<div id="footer-container"></div>
+
+<!-- Scripts -->
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/components/header.js"></script>
+<script src="/static/js/components/footer.js"></script>
+
+<script>
+function toggleFaq(questionEl) {
+  var faqItem = questionEl.parentElement;
+  var wasActive = faqItem.classList.contains('active');
+  document.querySelectorAll('.faq-item').forEach(function(item) {
+    item.classList.remove('active');
+  });
+  if (!wasActive) faqItem.classList.add('active');
+}
+
+document.getElementById('faqSearch').addEventListener('input', function() {
+  var query = this.value.toLowerCase().trim();
+  document.querySelectorAll('.faq-item').forEach(function(item) {
+    var text = item.querySelector('h3').textContent.toLowerCase();
+    item.style.display = (query === '' || text.includes(query)) ? 'block' : 'none';
+  });
+});
+</script>
+
+</body>
+</html>
