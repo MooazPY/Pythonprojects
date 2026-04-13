@@ -66,7 +66,6 @@ LiverCancerDetectionSystem/
 │   ├── model_predictor.py      # AI model loading & prediction
 │   ├── chatbotTest.py          # Chatbot testing script
 │   ├── requirements.txt        # Python dependencies
-│   ├── .env.example            # Environment variables template
 │   ├── static/
 │   │   ├── css/                # Stylesheets
 │   │   ├── js/                 # JavaScript files
