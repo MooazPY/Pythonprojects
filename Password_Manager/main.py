@@ -1,54 +1,125 @@
-import requests
-from datetime import datetime
-import smtplib
-import time
+from tkinter import *
+from tkinter import messagebox
+import random
+import json
 
-MY_EMAIL = "YOUR_EMAIL_HERE"
-MY_PASSWORD = "YOUR_PASSWORD_HERE"
-MY_LAT = 30.044420 # Your latitude
-MY_LNG = 31.235712 # Your longitude
+# Create the window
+window = Tk()
+window.title("Password Manager")
+window.minsize(600,600)
+window.config(padx=50,pady=50)
+
+# Add the photo
+canvas = Canvas(width=200,height=200)
+pic = PhotoImage(file=r"C:/Users/makka\Desktop/CS/logo.png")
+canvas.create_image(100,100,image=pic)
+canvas.place(x=140,y=10)
+
+# Labels
+website_label = Label(text="Website:")
+website_label.place(x=80,y=205)
+
+email_label = Label(text="Email/Username:")
+email_label.place(x=50,y=240)
+
+password_label = Label(text="Password:")
+password_label.place(x=70,y=280)
+
+# Entries
+web_entry = Entry(width=35)
+web_entry.place(x=150,y=205)
+web_entry.focus()
+
+email_entry = Entry(width=35)
+email_entry.place(x=150,y=240)
+email_entry.insert(0, "example@example.com")
+
+password_entry = Entry(width=21) # To show * except the password use show method
+password_entry.place(x=150,y=280)
 
 
-def is_iss_overhead():
-    """Check If the ISS is above you or not"""
-    response = requests.get(url="http://api.open-notify.org/iss-now.json")
-    response.raise_for_status()
-    data = response.json()
+# Generate Functionality
+def generate():
+    """Generate a random password for the user"""
+    password_entry.delete(0,END)
 
-    iss_latitude = float(data["iss_position"]["latitude"])
-    iss_longitude = float(data["iss_position"]["longitude"])
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
 
-    #Your position is within +5 or -5 degrees of the iss position.
-    if MY_LAT - 5 <= iss_latitude <= MY_LAT + 5 and MY_LNG - 5 <= iss_longitude <= MY_LNG + 5:
-        return True
+    nr_letters = random.randint(8, 10)
+    nr_symbols = random.randint(2, 4)
+    nr_numbers = random.randint(2, 4)
+
+    password_list = []
+
+    password_list += [random.choice(letters) for i in range(nr_letters)]
+    password_list += [random.choice(numbers) for i in range(nr_numbers)]
+    password_list += [random.choice(symbols) for i in range(nr_symbols)]
+
+    random.shuffle(password_list)
+
+    password = ""
+    for char in password_list:
+        password += char
+        
+    password_entry.insert(0,password)
 
 
-def is_night():
-    parameters = {
-        "lat": MY_LAT,
-        "lng": MY_LNG,
-        "formatted": 0,
+# Add functionality
+def add():
+    """Add the website and its email and password in a file to save it"""
+    new_data = {
+        web_entry.get():{
+            "email":email_entry.get(),
+            "password":password_entry.get(),
+        }
     }
-    response = requests.get("https://api.sunrise-sunset.org/json", params=parameters)
-    response.raise_for_status()
-    data = response.json()
-    sunrise = int(data["results"]["sunrise"].split("T")[1].split(":")[0])
-    sunset = int(data["results"]["sunset"].split("T")[1].split(":")[0])
+    
+    
+    if len(email_entry.get()) == 0 or len(web_entry.get()) == 0 or len(password_entry.get()) == 0:
+        messagebox.showwarning(title="oops",message="Please don't leave any fields empty!")
+    else:
+        try:
+            with open ("pass.json","r") as file:
+                data = json.load(file)
+        except FileNotFoundError:
+            with open("pass.json","w") as file:
+                json.dump(new_data,file,indent=4)
+        else:
+            data.update(new_data)
+            with open("pass.json","w") as file:
+                json.dump(data,file,indent=4)
+            web_entry.delete(0,END)
+            password_entry.delete(0,END)
 
-    time_now = datetime.now().hour
+# Search Functionality
+def search():
+    """Search if the specific website is in JSON file or not"""
+    with open("pass.json") as file:
+        data = json.load(file)
+        mails = [mail for mail in data]
 
-    if time_now >= sunset or time_now <= sunrise:
-        return True
+    if web_entry.get() in mails:
+        with open("pass.json","r") as file:
+            data = json.load(file)
+            password_get = data[web_entry.get()]["password"]
+            mail_get = data[web_entry.get()]["email"]
+        messagebox.showinfo(f"{web_entry.get()}",message=f"Email: {mail_get}\nPassword: {password_get}")
+    else:
+        messagebox.showerror(f"{web_entry.get()} Not Found",message=f"There is no website called {web_entry.get()} in file")
 
 
-while True:
-    time.sleep(60)
-    if is_iss_overhead() and is_night():
-        connection = smtplib.SMTP("YOUR_SMTP_ADDRESS_HERE")
-        connection.starttls()
-        connection.login(MY_EMAIL, MY_PASSWORD)
-        connection.sendmail(
-            from_addr=MY_EMAIL,
-            to_addrs=MY_EMAIL,
-            msg="Subject:Look Up👆\n\nThe ISS is in the sky."
-        )
+# Buttons
+generate_button = Button(text="Generate Password",command=generate)
+generate_button.place(x=280,y=280)
+
+add_button = Button(text="Add",command=add)
+add_button.place(x=150,y=310)
+add_button.config(width=34)
+
+search_button = Button(text="Search",width=10,command=search)
+search_button.place(x=370,y=205)
+
+
+window.mainloop()
