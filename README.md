@@ -44,13 +44,4 @@ CS Student & Python Developer passionate about building useful things with code.
 | 🤖 [Discord Quran Bot](./Discord_Quran_Bot) | Discord bot that serves Quran verses |
 | 🏥 [Liver Cancer Detection](./LiverCancerDetectionSystem) | ML-based liver cancer detection system |
 
----
 
-## 📊 GitHub Stats
-
-![MooazPY's GitHub Stats](https://github-readme-stats.vercel.app/api?username=MooazPY&show_icons=true&theme=default&hide_border=true)
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=MooazPY&layout=compact&theme=default&hide_border=true)
-
----
-
-*Thanks for stopping by!* 🙌
