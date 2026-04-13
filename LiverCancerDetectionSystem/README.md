@@ -86,10 +86,6 @@ LiverCancerDetectionSystem/
 │       ├── forgot-password.html# Password reset
 │       ├── verify-email.html   # Email verification
 │       ├── base.html           # Base template
-│       ├── 404.html            # Error pages
-│       └── 500.html
-├── ClassDiagram/
-│   └── ClassDiagram_Mermaid.txt
 ├── Test Images/
 │   ├── Cancer_Image.jpg
 │   └── NoCancer_Image.jpg
