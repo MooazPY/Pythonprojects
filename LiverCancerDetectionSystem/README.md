@@ -236,7 +236,6 @@ SMTP_FROM=Liver Care <your_email@gmail.com>
 
 ## 👨‍💻 Author
 
-**Motasem Salah Mabrook**
 - GitHub: [@MooazPY](https://github.com/MooazPY)
 
 ---
