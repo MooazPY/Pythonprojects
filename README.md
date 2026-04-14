@@ -86,5 +86,3 @@ CS Student & Python Developer who loves turning ideas into working projects — 
 [![Kaggle](https://img.shields.io/badge/Kaggle-mooazraafat-20BEFF?style=flat&logo=kaggle&logoColor=white)](https://www.kaggle.com/mooazraafat)
 
 ---
-
-*Thanks for stopping by!* 🙌
