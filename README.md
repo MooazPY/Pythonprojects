@@ -81,6 +81,9 @@ CS Student & Python Developer who loves turning ideas into working projects — 
 ## 📬 Connect
 
 [![GitHub](https://img.shields.io/badge/GitHub-MooazPY-181717?style=flat&logo=github)](https://github.com/MooazPY)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Mooaz%20Raafat-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mooazraafat/)
+[![Facebook](https://img.shields.io/badge/Facebook-Mooza%20Raafat-1877F2?style=flat&logo=facebook&logoColor=white)](https://www.facebook.com/mooza.raafat)
+[![Kaggle](https://img.shields.io/badge/Kaggle-mooazraafat-20BEFF?style=flat&logo=kaggle&logoColor=white)](https://www.kaggle.com/mooazraafat)
 
 ---
 
