@@ -20,7 +20,6 @@ CS Graduate, Python Backend Developer & AI/ML Integration enthusiast — turning
 
 - 🔧 Interning at **e&**, working on networking fundamentals (CCNA) and Linux system administration
 - 📡 Practicing Linux/CCNA hands-on in a self-built Rocky Linux VM lab
-- 🌍 Applying for the **WHO Internship Programme** (AI Data Engineering track)
 - 🚀 Deepening backend deployment skills — gunicorn, nginx, Docker, CI/CD
 
 ---
