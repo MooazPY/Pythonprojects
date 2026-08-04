@@ -1,0 +1,7 @@
+.env
+__pycache__/
+*.pyc
+guild_settings.sqlite3
+guild_settings.json
+*.zip
+.venv/

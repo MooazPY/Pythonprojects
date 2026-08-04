@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "discord-quran-bot"
+version = "2.1.1"
+description = "A Discord bot that delivers Quran ayahs daily and supports slash command lookup."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+  { name = "Discord Quran Bot", email = "support@example.com" }
+]
+keywords = ["discord", "quran", "bot", "ayah", "daily", "scheduler"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Religion",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Communications :: Chat",
+]
+dependencies = [
+  "discord.py==2.7.1",
+  "python-dotenv==1.2.2",
+  "aiohttp==3.14.3",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/discord-quran-bot"
+Documentation = "https://github.com/yourusername/discord-quran-bot#readme"
+Source = "https://github.com/yourusername/discord-quran-bot"
+
+[project.scripts]
+quran-bot = "main:main"
+
+[tool.setuptools]
+packages = ["bot"]
+include-package-data = true

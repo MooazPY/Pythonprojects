@@ -1,80 +1,99 @@
-# 🤖 Discord Quran Bot
+# Discord Quran Bot
 
-A lightweight Discord bot built with Python that sends a **random Quran page** to any channel on command — perfect for a daily wird (ورد يومي).
+A polished, client-friendly Discord bot for sharing Quran ayahs and daily devotional content. It supports both scheduled daily delivery and a long-running server mode with slash commands.
 
----
+## Features
 
-## ✨ Features
+- Slash commands: /quran, /translation, /surahinfo, /surah, /status, /setchannel, /settime, /setlanguage, /setbrand, /setcolor, /viewsettings, /help
+- Rich embed output for Quran ayahs and translations with custom per-server color and branding
+- Per-guild branding, language, and embed color configuration
+- Daily delivery mode with auto-scheduling and translation support
+- Usage analytics stored per guild for command popularity and performance monitoring
+- Local settings storage with optional custom database path
+- Free public Quran API integration via alquran.cloud
+- No privileged message content intent required for normal slash command operation
 
-- Responds to the `$quran` command in any channel
-- Sends a random Quran page image (pages 1–604)
-- Images fetched from [searchtruth.com](https://www.searchtruth.com)
-- Greets with **"الورد اليومي"** before sending the page
+## Installation
 
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Python 3.x
-- A Discord bot token — get one from the [Discord Developer Portal](https://discord.com/developers/applications)
-
-### Install dependencies
+Install locally using the package metadata:
 
 ```bash
-pip install discord.py
+python -m venv .venv
+.venv\\Scripts\\Activate.ps1
+pip install -e .
 ```
 
-### Setup
-
-1. Clone the repo
-2. Open `main.py` and replace the token placeholder:
-
-```python
-dis_token = "----------YOUR DISCORD TOKEN----------"
-```
-
-3. Run the bot:
+Or install directly from source:
 
 ```bash
-python main.py
+pip install .
 ```
 
----
+## Setup
 
-## 🖥️ Usage
+1. Copy the example environment file and fill in your values:
+   ```bash
+   copy .env.example .env
+   ```
+2. Create a Discord bot in the Developer Portal and copy the token.
+3. Invite the bot to your server using an install link with `applications.commands` and these permissions:
+   - Read Messages / View Channels
+   - Send Messages
+   - Use Slash Commands
 
-In any Discord channel the bot has access to, type:
+## Running the bot
 
+- Debug mode (prints a sample endpoint and exits):
+  ```bash
+  python main.py --print-url
+  ```
+- Daily mode (connects, sends one message, disconnects):
+  ```bash
+  python main.py --daily
+  ```
+- Serve mode (long-running bot):
+  ```bash
+  python main.py --serve
+  ```
+
+## Customization Guide
+
+A non-technical buyer can change the following without editing code:
+
+- Bot name and avatar from the Discord Developer Portal
+- Default channel by using `/setchannel`
+- Daily time and timezone by using `/settime`
+- Default translation language by using `/setlanguage`
+- Daily brand text by using `/setbrand`
+- View current configuration with `/viewsettings`
+- Daily branding text via the `DAILY_BRAND` environment variable
+- Default translation language via `DEFAULT_LANGUAGE`
+- Default embed color via `DEFAULT_EMBED_COLOR`
+- Force instant command registration to a test server with `DISCORD_GUILD_ID`
+- Store settings in a custom path with `GUILD_SETTINGS_PATH`
+
+## For buyers
+
+This bot is ready to deliver premium Quran content to Discord communities:
+
+- Unique daily embeds that feel polished and modern
+- Per-server branding and language customization
+- Easy one-command setup for admins
+- Installable with `pip install .` and deployable with Docker
+- CI-ready with GitHub Actions to verify package health on every push
+
+If the buyer wants legacy prefix-style commands, they can enable the Message Content Intent in the Developer Portal, but the bot is fully functional with slash commands alone.
+
+## Docker
+
+```bash
+docker build -t quran-bot .
+docker run --env-file .env quran-bot
 ```
-$quran
-```
 
-The bot will respond with:
-```
-الورد اليومي
-https://www.searchtruth.com/quran/images/images1/042.jpg
-```
+## Changelog
 
----
-
-## 📁 Project Structure
-
-```
-Discord_Quran_Bot/
-└── main.py       # Bot logic
-```
-
----
-
-## ⚠️ Important
-
-- **Never share your Discord token publicly.** Consider storing it in a `.env` file and loading it with `python-dotenv` for safety.
-- Make sure the bot has **Send Messages** permission in your server.
-
----
-
-## 👤 Author
-
-**MooazPY** — [github.com/MooazPY](https://github.com/MooazPY)
+- Replaced the old image-scraping flow with a public Quran API
+- Split the bot into daily and serve modes
+- Added slash commands and per-guild settings
+- Added packaging and documentation for resale and self-hosting
