@@ -112,7 +112,9 @@ CS Graduate, Python Backend Developer & AI/ML Integration enthusiast — turning
 
 | Project | Description | Tech |
 |---|---|---|
-| 🤖 [Discord Quran Bot](./Discord_Quran_Bot) | Sends random Quran pages on command | discord.py |
+| 📖 [Discord Quran Bot](./bots/quran_bot) | Interactive Discord bot sending Quran pages, recitations & verse lookup | Python, discord.py, Docker |
+| 🛡️ [Haris Pro — Arabic Moderation & AI Anti-Scam Bot](./bots/arabic_mod_bot) | Enterprise Arabic Discord moderation bot with Hugging Face AI toxicity detection, evasion neutralization & anti-raid | Python, discord.py, Hugging Face AI, SQLite, Docker |
+| 🤖 [Bots Portfolio Hub](./bots) | Centralized directory featuring all custom Discord bot projects | Markdown, Docker, Python |
 
 ### 🎨 Creative
 
