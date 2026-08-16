@@ -66,3 +66,14 @@ class SpamTracker:
 
     def clear_user(self, guild_id: int, user_id: int) -> None:
         self._history.pop((guild_id, user_id), None)
+
+    def cleanup_stale_history(self, max_age_seconds: float = 600) -> int:
+        """Removes user message history entries older than max_age_seconds to prevent memory leaks."""
+        now = time.time()
+        stale_keys = [
+            k for k, entries in self._history.items()
+            if not entries or (now - entries[-1][0] > max_age_seconds)
+        ]
+        for k in stale_keys:
+            del self._history[k]
+        return len(stale_keys)

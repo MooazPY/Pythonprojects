@@ -123,6 +123,9 @@ _FALLBACK_BAD_WORDS: List[str] = [
     "منيك",
     "شرموطة",
     "زبي",
+    "علق",
+    "علوق",
+    "خرا",
 ]
 
 DEFAULT_BAD_WORDS: List[str] = load_bad_words(_FALLBACK_BAD_WORDS)

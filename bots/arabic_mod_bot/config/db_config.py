@@ -9,6 +9,8 @@ from typing import Optional, List, Dict, Any
 
 from config.auto_mod import PRESETS, apply_preset
 
+from config.cache_store import TTLCacheStore
+
 DEFAULT_WARN_THRESHOLD = 3
 DEFAULT_MUTE_MINUTES = 30
 DEFAULT_AI_CONFIDENCE = 0.80
@@ -34,6 +36,7 @@ class GuildConfig:
     raid_join_threshold: int = PRESETS["medium"].raid_join_threshold
     raid_window_seconds: int = PRESETS["medium"].raid_window_seconds
     raid_auto_lockdown: bool = False
+    language: str = "ar"
     custom_bad_words: List[str] = field(default_factory=list)
     whitelisted_domains: List[str] = field(default_factory=list)
     ignored_channel_ids: List[int] = field(default_factory=list)
@@ -69,6 +72,7 @@ class GuildConfig:
             raid_join_threshold=data.get("raid_join_threshold", raid_thresh),
             raid_window_seconds=data.get("raid_window_seconds", raid_win),
             raid_auto_lockdown=data.get("raid_auto_lockdown", False),
+            language=data.get("language", "ar"),
             custom_bad_words=data.get("custom_bad_words", []),
             whitelisted_domains=data.get("whitelisted_domains", []),
             ignored_channel_ids=data.get("ignored_channel_ids", []),
@@ -97,6 +101,7 @@ class GuildConfig:
             "raid_join_threshold": self.raid_join_threshold,
             "raid_window_seconds": self.raid_window_seconds,
             "raid_auto_lockdown": self.raid_auto_lockdown,
+            "language": self.language,
             "custom_bad_words": self.custom_bad_words,
             "whitelisted_domains": self.whitelisted_domains,
             "ignored_channel_ids": self.ignored_channel_ids,
@@ -122,7 +127,7 @@ class ConfigStore:
 
     def __init__(self, db_path: str = "bot_data.db"):
         self.db_path = db_path
-        self._cache: Dict[int, GuildConfig] = {}
+        self.cache = TTLCacheStore(default_ttl_seconds=300, max_size=1000)
         self._init_db()
 
     def _init_db(self):
@@ -153,8 +158,10 @@ class ConfigStore:
         conn.close()
 
     async def get_config(self, guild_id: int, use_cache: bool = True) -> GuildConfig:
-        if use_cache and guild_id in self._cache:
-            return self._cache[guild_id]
+        if use_cache:
+            cached = self.cache.get(guild_id)
+            if cached is not None:
+                return cached
 
         def _fetch():
             conn = sqlite3.connect(self.db_path)
@@ -172,7 +179,7 @@ class ConfigStore:
             apply_preset(cfg, "medium")
             await self.save_config(cfg)
 
-        self._cache[guild_id] = cfg
+        self.cache.set(guild_id, cfg)
         return cfg
 
     async def save_config(self, cfg: GuildConfig) -> None:
@@ -187,10 +194,10 @@ class ConfigStore:
             conn.close()
 
         await asyncio.to_thread(_save)
-        self._cache[cfg.guild_id] = cfg
+        self.cache.set(cfg.guild_id, cfg)
 
     async def invalidate(self, guild_id: int) -> None:
-        self._cache.pop(guild_id, None)
+        self.cache.invalidate(guild_id)
 
     async def increment_stat(self, guild_id: int, stat_name: str, count: int = 1) -> None:
         cfg = await self.get_config(guild_id)
@@ -290,6 +297,36 @@ class ConfigStore:
             return row[0] if row else 0
 
         return await asyncio.to_thread(_fetch)
+
+    async def decrement_warning(self, guild_id: int, user_id: int, count_to_deduct: int = 1) -> int:
+        doc_id = f"{guild_id}_{user_id}"
+
+        def _update():
+            conn = sqlite3.connect(self.db_path)
+            cursor = conn.cursor()
+            cursor.execute("SELECT count, history FROM warnings WHERE id = ?", (doc_id,))
+            row = cursor.fetchone()
+
+            if not row:
+                conn.close()
+                return 0
+
+            current_count = row[0]
+            new_count = max(0, current_count - count_to_deduct)
+
+            if new_count == 0:
+                cursor.execute("DELETE FROM warnings WHERE id = ?", (doc_id,))
+            else:
+                cursor.execute(
+                    "UPDATE warnings SET count = ? WHERE id = ?",
+                    (new_count, doc_id)
+                )
+
+            conn.commit()
+            conn.close()
+            return new_count
+
+        return await asyncio.to_thread(_update)
 
     async def clear_warnings(self, guild_id: int, user_id: int) -> None:
         doc_id = f"{guild_id}_{user_id}"

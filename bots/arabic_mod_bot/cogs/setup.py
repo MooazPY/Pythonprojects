@@ -5,6 +5,9 @@ All commands require appropriate server admin/moderator permissions and respond 
 
 from __future__ import annotations
 
+import io
+import json
+
 import discord
 from discord import app_commands
 from discord.ext import commands
@@ -189,6 +192,22 @@ class SetupCog(commands.Cog):
             ephemeral=True,
         )
 
+    @config_group.command(name="set-language", description="تغيير لغة البوت والسيرفر (العربية / English)")
+    @app_commands.describe(lang="اختيار لغة البوت (ar = العربية, en = English)")
+    @app_commands.choices(
+        lang=[
+            app_commands.Choice(name="العربية (Arabic)", value="ar"),
+            app_commands.Choice(name="English", value="en"),
+        ]
+    )
+    @app_commands.checks.has_permissions(manage_guild=True)
+    async def set_language(self, interaction: discord.Interaction, lang: app_commands.Choice[str]):
+        cfg = await self.store.get_config(interaction.guild_id, use_cache=False)
+        cfg.language = lang.value
+        await self.store.save_config(cfg)
+        msg = "✅ تم تغيير لغة السيرفر إلى: **العربية**" if lang.value == "ar" else "✅ Server language updated to: **English**"
+        await interaction.response.send_message(msg, ephemeral=True)
+
     @config_group.command(name="toggle-profanity", description="تفعيل/تعطيل فلتر الألفاظ")
     @app_commands.checks.has_permissions(manage_guild=True)
     async def toggle_profanity(self, interaction: discord.Interaction):
@@ -267,12 +286,47 @@ class SetupCog(commands.Cog):
             f"تمت إزالة {role.mention} من الرتب المعفاة. ✅", ephemeral=True
         )
 
+    @config_group.command(name="export", description="تصدير إعدادات أمان السيرفر في ملف JSON للاحتفاظ بنسخة احتياطية")
+    @app_commands.checks.has_permissions(manage_guild=True)
+    async def export_config(self, interaction: discord.Interaction):
+        cfg = await self.store.get_config(interaction.guild_id, use_cache=False)
+        data = cfg.to_dict()
+        buffer = io.BytesIO(json.dumps(data, ensure_ascii=False, indent=2).encode("utf-8"))
+        file = discord.File(fp=buffer, filename=f"haris_config_{interaction.guild_id}.json")
+        await interaction.response.send_message(
+            "📦 **تم تصدير إعدادات أمان السيرفر بنجاح:**", file=file, ephemeral=True
+        )
+
+    @config_group.command(name="import", description="استيراد إعدادات أمان السيرفر من ملف JSON")
+    @app_commands.describe(file="ملف إعدادات JSON المصدّر سابقًا")
+    @app_commands.checks.has_permissions(manage_guild=True)
+    async def import_config(self, interaction: discord.Interaction, file: discord.Attachment):
+        if not file.filename.endswith(".json"):
+            await interaction.response.send_message("❌ **خطأ:** يجب رفع ملف بصيغة `.json` فقط.", ephemeral=True)
+            return
+
+        try:
+            content = await file.read()
+            data = json.loads(content.decode("utf-8"))
+            cfg = await self.store.get_config(interaction.guild_id, use_cache=False)
+            
+            # Apply imported fields safely
+            for key, val in data.items():
+                if hasattr(cfg, key) and key not in ("guild_id", "stats_deleted_messages", "stats_warn_count", "stats_mute_count"):
+                    setattr(cfg, key, val)
+
+            await self.store.save_config(cfg)
+            await self._invalidate_moderation_cog_filters(interaction.guild_id)
+            await interaction.response.send_message("✅ **تم استيراد وتطبيق إعدادات الأمان بنجاح!**", ephemeral=True)
+        except Exception as e:
+            await interaction.response.send_message(f"❌ **فشل استيراد الملف:** {e}", ephemeral=True)
+
     @filter_group.command(name="add-word", description="إضافة كلمة إلى قائمة الكلمات المحظورة")
     @app_commands.describe(word="الكلمة المراد إضافتها")
     @app_commands.checks.has_permissions(manage_guild=True)
     async def add_word(self, interaction: discord.Interaction, word: str):
         await self.store.add_custom_word(interaction.guild_id, word)
-        self._invalidate_moderation_cog_filters(interaction.guild_id)
+        await self._invalidate_moderation_cog_filters(interaction.guild_id)
         await interaction.response.send_message("تمت إضافة الكلمة إلى الفلتر. ✅", ephemeral=True)
 
     @filter_group.command(name="remove-word", description="إزالة كلمة من قائمة الكلمات المحظورة")
@@ -280,7 +334,7 @@ class SetupCog(commands.Cog):
     @app_commands.checks.has_permissions(manage_guild=True)
     async def remove_word(self, interaction: discord.Interaction, word: str):
         await self.store.remove_custom_word(interaction.guild_id, word)
-        self._invalidate_moderation_cog_filters(interaction.guild_id)
+        await self._invalidate_moderation_cog_filters(interaction.guild_id)
         await interaction.response.send_message("تمت إزالة الكلمة من الفلتر. ✅", ephemeral=True)
 
     @filter_group.command(name="list-words", description="عرض الكلمات المخصصة المضافة في هذا السيرفر")
@@ -304,15 +358,27 @@ class SetupCog(commands.Cog):
     @app_commands.checks.has_permissions(manage_guild=True)
     async def whitelist_domain(self, interaction: discord.Interaction, domain: str):
         await self.store.add_whitelisted_domain(interaction.guild_id, domain)
-        self._invalidate_moderation_cog_filters(interaction.guild_id)
+        await self._invalidate_moderation_cog_filters(interaction.guild_id)
         await interaction.response.send_message(
             f"تمت إضافة `{domain.strip().lower()}` إلى النطاقات الموثوقة. ✅", ephemeral=True
         )
 
-    def _invalidate_moderation_cog_filters(self, guild_id: int) -> None:
+    @filter_group.command(
+        name="remove-domain", description="إزالة نطاق من القائمة الموثوقة لفلتر الروابط"
+    )
+    @app_commands.describe(domain="اسم النطاق، مثل example.com")
+    @app_commands.checks.has_permissions(manage_guild=True)
+    async def remove_domain(self, interaction: discord.Interaction, domain: str):
+        await self.store.remove_whitelisted_domain(interaction.guild_id, domain)
+        await self._invalidate_moderation_cog_filters(interaction.guild_id)
+        await interaction.response.send_message(
+            f"تمت إزالة `{domain.strip().lower()}` من النطاقات الموثوقة. ✅", ephemeral=True
+        )
+
+    async def _invalidate_moderation_cog_filters(self, guild_id: int) -> None:
         mod_cog = self.bot.get_cog("ModerationCog")
         if mod_cog:
-            mod_cog.invalidate_filters(guild_id)
+            await mod_cog.invalidate_filters(guild_id)
 
 
 async def setup(bot: commands.Bot):

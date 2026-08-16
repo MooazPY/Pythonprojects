@@ -1,6 +1,6 @@
 # Haris Pro (حارس Pro) — Enterprise Arabic Moderation & AI Anti-Scam Discord Bot
 
-**Haris Pro** (حارس Pro) is a commercial-grade, self-hosted Discord moderation bot built specifically for Arabic-speaking communities. Powered by **Hugging Face AI NLP models**, multi-layered Arabic obfuscation neutralization, zero-latency local SQLite database, and advanced anti-scam & anti-raid protection.
+**Haris Pro** (حارس Pro) is a commercial-grade, self-hosted Discord moderation bot built specifically for Arabic-speaking communities. Powered by **Hugging Face AI NLP models**, multi-layered Arabic obfuscation neutralization, zero-latency local SQLite database, built-in Web Security Dashboard, and advanced anti-scam & anti-raid protection.
 
 ---
 
@@ -8,9 +8,15 @@
 
 | Feature | Description |
 |---------|-------------|
-| 🤖 **Hugging Face AI Integration** | Real-time Arabic toxicity, hate speech, and profanity detection using hosted NLP models (`aubmindlab/bert-base-arabertv02` / `MARBERT`) |
+| 🤖 **Hugging Face AI Integration** | Real-time Arabic toxicity, dialectal sentiment, and profanity detection using hosted NLP models (`Hate-speech-CNERG/dehatebert-mono-arabic` via HF Router) |
 | ⚡ **Zero-Lag Offline Fallback** | Async API client (`aiohttp`) with sub-100ms execution. Seamlessly falls back to local dictionary filters if AI API is offline |
 | 🔤 **Evasion-Proof Arabic Normalization** | Neutralizes zero-width spaces (`\u200b`), Tashkeel diacritics, Tatweel (`ـ`), Alef/Taa variants, repeated character spam (`كللللب`), and Arabizi numbers (`3`, `5`, `7`, `9`) |
+| ⚡ **Advanced TTL Caching Layer** | In-memory `TTLCacheStore` with automatic TTL expiration, LRU eviction, and hit/miss ratio telemetry |
+| 📝 **Moderation Appeals System** | Interactive `/appeal` modal & embeds with persistent Accept ✅ / Reject ❌ buttons in `#حارس-الإشراف` (deducts 1 warning per approved appeal) |
+| 🌐 **Multi-Language Support (AR / EN)** | Full Arabic & English localization (`utils/i18n.py`) configurable via `/config set-language` |
+| 📊 **Visual Statistics & Progress Bar Charts** | ASCII progress bar charts in `/stats` (`████████░░ 80%`) and Chart.js telemetry on Web Dashboard |
+| 🌐 **Built-in Web Security Dashboard** | Real-time web dashboard running at `http://localhost:8080` with telemetry API (`GET /api/stats`) |
+| 📦 **JSON Config Export & Import** | One-click server security backup & restore using `.json` configuration files (`/config export`, `/config import`) |
 | 🗄️ **Zero-Cost SQLite Storage** | 100% free local SQLite database (`bot_data.db`) with WAL mode — zero external cloud costs (no Firestore required) |
 | 🔍 **`/analyze_text` Diagnostic Tool** | Live inspector allowing admins to test Arabic sentences and preview normalized text, dictionary matches, and Hugging Face AI confidence scores |
 | 📊 **`/stats` Server Security Dashboard** | Real-time metrics tracking total deleted messages, issued warnings, applied mutes, and active AI protection status |
@@ -24,10 +30,12 @@
 
 ```
 arabic_mod_bot/
-├── main.py                    # Main bot entry point & slash command sync
+├── main.py                    # Main bot entry point, slash command sync & global error handler
 ├── moderation.py              # Moderation actions, warn/mute logic, & logging
+├── web_dashboard.py           # Async HTTP Web Security Dashboard server (aiohttp)
 ├── config/
 │   ├── db_config.py           # SQLite database store & GuildConfig schema
+│   ├── cache_store.py         # Advanced TTL & LRU Caching Layer
 │   └── auto_mod.py            # Low / Medium / High security presets
 ├── data/
 │   ├── arabic_bad_words.json  # Editable Arabic bad words dictionary
@@ -39,13 +47,18 @@ arabic_mod_bot/
 │   ├── spam_detection.py      # Spam & rate-limit tracker
 │   └── raid_protection.py     # Mass join anti-raid tracker
 ├── cogs/
-│   ├── moderation.py          # Message listener, AI filter pipeline, /analyze_text & /stats
-│   └── setup.py               # Setup panel, /setup_ai, and whitelist/blacklist controls
-├── utils/data_loader.py       # JSON dataset loader
-├── tests/                     # Comprehensive Pytest suite
+│   ├── moderation.py          # Message listener, AI filter pipeline, /appeal, /analyze_text & /stats
+│   └── setup.py               # Setup panel, /setup_ai, /config set-language, export/import
+├── utils/
+│   ├── data_loader.py         # JSON dataset loader
+│   └── i18n.py                # Multi-language translation resolver (AR / EN)
+├── tests/                     # Comprehensive Pytest suite (43 Tests)
 │   ├── test_arabic_words.py
 │   ├── test_auto_mod.py
+│   ├── test_cache_and_i18n.py
+│   ├── test_config_export_import.py
 │   ├── test_db_config.py
+│   ├── test_error_handling.py
 │   ├── test_hf_ai_classifier.py
 │   ├── test_moderation_helpers.py
 │   ├── test_scam_links.py
@@ -69,6 +82,9 @@ Copy `.env.example` to `.env` and fill in your details:
 ```env
 DISCORD_BOT_TOKEN=your_discord_bot_token_here
 HUGGINGFACE_TOKEN=your_optional_hf_api_token_here
+HF_MODEL_NAME=Hate-speech-CNERG/dehatebert-mono-arabic
+PORT=8080
+DASHBOARD_API_KEY=your_optional_dashboard_api_key_here
 ```
 
 ### 3. Local Installation & Launch
@@ -97,9 +113,15 @@ docker compose up -d --build
 | `/stats` | Moderator | Display server protection statistics (deleted messages, warnings, mutes) |
 | `/config show` | Admin | Display full server security configuration |
 | `/config set-level` | Admin | Change protection level (`low`, `medium`, `high`) |
+| `/config set-language` | Admin | Switch bot language (`ar` = Arabic, `en` = English) |
+| `/config export` | Admin | Export server security configuration to `.json` backup file |
+| `/config import` | Admin | Import & restore server security configuration from `.json` backup file |
+| `/appeal` | User | Open interactive appeal modal to challenge warning or mute |
 | `/filter add-word` | Admin | Add custom word to server blacklist |
 | `/filter remove-word` | Admin | Remove custom word from server blacklist |
+| `/filter list-words` | Admin | List custom blacklisted words |
 | `/filter whitelist-domain` | Admin | Allow trusted domain exceptions for scam link filter |
+| `/filter remove-domain` | Admin | Remove trusted domain from whitelist |
 | `/warn` | Moderator | Issue manual warning to a user |
 | `/warnings check` | Moderator | Check user warning count and history |
 | `/warnings clear` | Moderator | Reset warning count for a user |
@@ -107,11 +129,21 @@ docker compose up -d --build
 
 ---
 
+## 🌐 Web Security Dashboard
+
+Haris Pro features a built-in async HTTP Web Security Dashboard running alongside the bot:
+- **Dashboard URL**: `http://localhost:8080` (or configured `PORT`)
+- **Telemetry API**: `GET /api/stats`
+- **Security & Authentication**: Supports optional API key protection (`DASHBOARD_API_KEY` via `X-API-Key` header or `?key=...`)
+- **Features**: Live metrics for active servers, deleted messages, warnings, mutes, and NLP model telemetry.
+
+---
+
 ## 🧪 Running Unit Tests
 
-Run the complete test suite to verify 100% code correctness:
+Run the complete test suite (43 unit tests) to verify 100% code correctness:
 ```bash
-pytest
+pytest -v
 ```
 
 ---
@@ -122,3 +154,4 @@ Haris Pro is licensed under **MIT**, granting full rights to sell, rebrand, or h
 
 1. **SaaS Hosting Model**: Host one instance of Haris Pro on a VPS ($5/mo) and offer it as a premium bot subscription for Discord communities.
 2. **Turn-key Source Code Sales**: Sell the complete repository + Docker setup guide to server owners seeking a private, self-hosted Arabic moderation bot.
+
