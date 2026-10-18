@@ -115,7 +115,7 @@ Visual engines, coordinate-mapping systems, and algorithms:
 Cloud & Orchestration:  Kubernetes, Docker, Docker Compose, AWS EC2, Linux (Rocky Linux 9, RHEL), systemd
 CI/CD & Monitoring:     GitHub Actions, Prometheus, Grafana, Nginx, Bash
 Backend & APIs:         FastAPI, Flask, RESTful API Design, Pydantic, Requests
-Databases:              PostgreSQL, SQLite (WAL Mode), Firebase Firestore
+Databases:              SQLite (WAL Mode), Firebase Firestore
 Security & Testing:     AES Encryption, SSH Hardening, Pytest, Unittest
 ```
 
