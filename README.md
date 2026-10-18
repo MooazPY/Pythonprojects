@@ -1,132 +1,176 @@
-# Hi, I'm Mooaz 👋
+<div align="center">
 
-CS Graduate, Python Backend Developer & AI/ML Integration enthusiast — turning ideas into working systems, from terminal games to full ML pipelines.
+# 🐍 Python Engineering & Systems Portfolio
+### *Production Backends, Cloud Services, REST APIs, Automation & Algorithms*
 
----
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![AWS](https://img.shields.io/badge/AWS-EC2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white)](https://aws.amazon.com/ec2/)
 
-## 🐍 About Me
+<br/>
 
-- 🎓 Computer Science graduate (MTI University, Cairo)
-- 💻 Focused on Python backend development — Flask & FastAPI
-- 🧠 AI/ML integration into real backend systems (not just notebooks)
-- 🔭 Built 20+ projects spanning games, automation, APIs, GUI apps & ML
-- 🌐 Experience with REST APIs, web scraping, and Discord bots
-- 🛰️ Currently interning at **e& (Etisalat Egypt)**, building networking (CCNA) and Linux fundamentals
-- 📍 Cairo, Egypt
+> A curated collection of 15+ software engineering projects demonstrating clean object-oriented design, RESTful backend architecture, cloud deployments, real-time automation, and interactive graphical systems.
 
----
-
-## 🌱 Currently
-
-- 🔧 Interning at **e&**, working on networking fundamentals (CCNA) and Linux system administration
-- 📡 Practicing Linux/CCNA hands-on in a self-built Rocky Linux VM lab
-- 🚀 Deepening backend deployment skills — gunicorn, nginx, Docker, CI/CD
+</div>
 
 ---
 
-## 🛠️ Tech Stack
+## 📑 Table of Contents
 
-**Languages & Frameworks**
-
-![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
-![Flask](https://img.shields.io/badge/Flask-000000?style=flat&logo=flask&logoColor=white)
-![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white)
-
-**Databases**
-
-![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat&logo=mongodb&logoColor=white)
-![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=flat&logo=firebase&logoColor=black)
-
-**AI / ML & Data**
-
-![Scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat&logo=scikit-learn&logoColor=white)
-![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat&logo=pandas&logoColor=white)
-![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=flat&logo=pytorch&logoColor=white)
-
-**Libraries & Tools**
-
-![Pydantic](https://img.shields.io/badge/Pydantic-E92063?style=flat&logo=pydantic&logoColor=white)
-![Tkinter](https://img.shields.io/badge/Tkinter-GUI-blue?style=flat)
-![BeautifulSoup](https://img.shields.io/badge/BeautifulSoup-Scraping-green?style=flat)
-![Requests](https://img.shields.io/badge/Requests-HTTP-orange?style=flat)
-![Turtle](https://img.shields.io/badge/Turtle-Graphics-yellowgreen?style=flat)
-![discord.py](https://img.shields.io/badge/discord.py-5865F2?style=flat&logo=discord&logoColor=white)
-
-**Infrastructure & Dev Tools**
-
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
-![Nginx](https://img.shields.io/badge/Nginx-009639?style=flat&logo=nginx&logoColor=white)
-![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat&logo=linux&logoColor=black)
-![Git](https://img.shields.io/badge/Git-F05032?style=flat&logo=git&logoColor=white)
-![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)
+- [🚀 Flagship Production Systems](#-flagship-production-systems)
+- [📂 Portfolio Directory & Projects](#-portfolio-directory--projects)
+  - [🌐 Automation & API Integrations](#-automation--api-integrations)
+  - [🖥️ Desktop & GUI Applications](#️-desktop--gui-applications)
+  - [🔐 Security & Systems](#-security--systems)
+  - [🎮 Interactive Games & Simulations](#-interactive-games--simulations)
+- [🛠️ Tech Stack & Dependencies](#️-tech-stack--dependencies)
+- [🚀 Quickstart & Setup](#-quickstart--setup)
+- [👨‍💻 Author & Connect](#-author--connect)
 
 ---
 
-## 📂 Projects
+## 🚀 Flagship Production Systems
 
-### 🏥 AI & Backend Systems
+These are enterprise-grade containerized systems deployed to cloud infrastructure:
 
-| Project | Description | Tech |
-|---|---|---|
-| 🏥 [Liver Cancer Detection System](./LiverCancerDetectionSystem) | Three-stage AI pipeline (U-Net segmentation → ResNet-50 classification → severity grading) trained on 70,000+ CT scan images, served via a FastAPI backend with Firestore integration | FastAPI, PyTorch, Firebase |
-
-### 📊 Data Science
-
-| Project | Description | Tech |
-|---|---|---|
-| 🌸 [Iris Classification](./Iris_Classification) | Classic multi-class classification on the Iris dataset | Scikit-learn, Pandas |
-| 🚗 [Car Price Prediction](./Car_Price_Prediction) | Regression model predicting car prices from feature data | Scikit-learn, Pandas |
-| 📈 [Sales Prediction](./Sales_Prediction) | Forecasting sales using historical data trends | Scikit-learn, Pandas |
-| 📉 [Unemployment Analysis](./Unemployment_Analysis) | Exploratory data analysis on unemployment trends | Pandas, Matplotlib |
-
-### 🎮 Games
-
-| Project | Description | Tech |
-|---|---|---|
-| 🎮 [Hangman Game](./Hangman_Game) | Terminal word guessing game with ASCII art stages | Python |
-| 📈 [Higher-Lower Game](./Higher-Lower_Game) | Guess which celebrity has more followers | Python |
-| 🐍 [Snake Game](./Snake_Game) | Classic snake game with score tracking | Turtle |
-| 🏓 [Pong Game](./Pong_game) | Two-player Pong with collision & scoring | Turtle |
-| 🐢 [Turtle Crossing](./Turtle_Crossing) | Frogger-style game with increasing difficulty | Turtle |
-| 🐢 [Turtles Race](./Turtles_Race.py) | Bet on a colored turtle and watch it race | Turtle |
-
-### 🛠️ Tools & Automation
-
-| Project | Description | Tech |
-|---|---|---|
-| 🔐 [Caesar Cipher](./Caesar_Cipher) | Encrypt & decrypt messages with shift cipher | Python |
-| ☕ [Coffee Machine](./Coffee_Machine.py) | Coin-based vending machine simulator | Python OOP |
-| 🔑 [Password Manager](./Password_Manager.py) | Generate & store passwords locally with search | Tkinter, JSON |
-| 🌍 [ISS Tracker](./ISS.py) | Email alert when ISS passes overhead at night | Requests, SMTP |
-| 📊 [Workout Tracker](./Workout_Tracking) | Log workouts via natural language to Google Sheets | Nutritionix API, Sheety |
-
-### 🌐 Web & Data
-
-| Project | Description | Tech |
-|---|---|---|
-| 🌐 [Web Scraping](./WebScraping) | Scrape Empire's Top 100 movies to a text file | BeautifulSoup |
-| 🗺️ [US States Game](./US_states) | Geography quiz — name all 50 states on a map | Turtle, Pandas |
-| ❓ [Quizzler](./Quizzler) | OOP trivia quiz app with a GUI | Tkinter, Open Trivia API |
-
-### 🤖 Bots
-
-| Project | Description | Tech |
-|---|---|---|
-| 📖 [Discord Quran Bot](./bots/quran_bot) | Interactive Discord bot sending Quran pages, recitations & verse lookup | Python, discord.py, Docker |
-| 🛡️ [Haris Pro — Arabic Moderation & AI Anti-Scam Bot](./bots/arabic_mod_bot) | Enterprise Arabic Discord moderation bot with Hugging Face AI toxicity detection, evasion neutralization & anti-raid | Python, discord.py, Hugging Face AI, SQLite, Docker |
-| 🤖 [Bots Portfolio Hub](./bots) | Centralized directory featuring all custom Discord bot projects | Markdown, Docker, Python |
-
-### 🎨 Creative
-
-| Project | Description | Tech |
-|---|---|---|
-| 🎨 [The Hirst Painting](./The_Hirst_Painting.py) | Generative 10×10 dot painting inspired by Damien Hirst | Turtle |
+<table>
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Description</th>
+      <th>Key Technologies</th>
+      <th>Repository / Source</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>🛡️ Haris Bot</b></td>
+      <td>Arabic Discord moderation & anti-scam bot with Hugging Face AI text classification, SQLite WAL mode, anti-raid lockdown, and telemetry dashboard.</td>
+      <td><code>Python</code> <code>Hugging Face</code> <code>SQLite WAL</code> <code>Docker</code> <code>AWS EC2</code></td>
+      <td><a href="https://github.com/MooazPY/haris-bot"><b>View Repository ➔</b></a></td>
+    </tr>
+    <tr>
+      <td><b>🩺 Liver Cancer Detection System</b></td>
+      <td>End-to-end medical diagnosis pipeline (U-Net lesion segmentation + ResNet-50 classification) handling 70,000+ CT scans with sub-2s inference response time.</td>
+      <td><code>FastAPI</code> <code>PyTorch</code> <code>Firebase Firestore</code> <code>Docker</code></td>
+      <td><a href="https://github.com/MooazPY/LiverCancer-Project"><b>View Repository ➔</b></a></td>
+    </tr>
+    <tr>
+      <td><b>📖 Discord Quran Bot Service</b></td>
+      <td>Containerized cloud background daemon serving automated daily Quran image posts and verse lookups with 99% uptime.</td>
+      <td><code>discord.py</code> <code>Docker Compose</code> <code>systemd</code> <code>GitHub Actions</code></td>
+      <td><a href="https://github.com/MooazPY/quran-bot"><b>View Repository ➔</b></a></td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
-## 📬 Connect
+## 📂 Portfolio Directory & Projects
 
-[![GitHub](https://img.shields.io/badge/GitHub-MooazPY-181717?style=flat&logo=github)](https://github.com/MooazPY)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Mooaz%20Raafat-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mooazraafat/)
-[![Facebook](https://img.shields.io/badge/Facebook-Mooza%20Raafat-1877F2?style=flat&logo=facebook&logoColor=white)](https://www.facebook.com/mooza.raafat)
-[![Kaggle](https://img.shields.io/badge/Kaggle-mooazraafat-20BEFF?style=flat&logo=kaggle&logoColor=white)](https://www.kaggle.com/mooazraafat)
+### 🌐 Automation & API Integrations
+
+| Directory | Project | Description | Tech Stack |
+| :--- | :--- | :--- | :--- |
+| [`/Workout_Tracking`](./Workout_Tracking) | **NLP Workout Logger** | Parses natural language exercise descriptions (e.g. *"ran 5km in 30 mins"*) via Nutritionix API and automatically records calories and timestamps to Google Sheets via Sheety. | `Python`, `Requests`, `Nutritionix API`, `Sheety` |
+| [`/ISS_Tracker`](./ISS_Tracker) | **ISS Overhead Tracker** | Polls live International Space Station telemetry and Sunrise/Sunset APIs; automatically dispatches an SMTP email notification when the ISS is overhead during dark hours. | `Python`, `REST APIs`, `SMTP`, `JSON` |
+| [`/WebScraping`](./WebScraping) | **Empire Top 100 Scraper** | Automated web scraping pipeline parsing paginated DOM trees to extract, clean, and serialize cinema ranking data into structured storage. | `Python`, `BeautifulSoup4`, `Requests` |
+
+---
+
+### 🖥️ Desktop & GUI Applications
+
+| Directory | Project | Description | Tech Stack |
+| :--- | :--- | :--- | :--- |
+| [`/Password_Manager`](./Password_Manager) | **Secure Password Vault** | Desktop credential generator and manager with master password authentication, clipboard integration, search indexing, and encrypted JSON storage. | `Python`, `Tkinter`, `JSON`, `Pyperclip` |
+| [`/Quizzler`](./Quizzler) | **Interactive Quiz Engine** | Object-oriented desktop trivia application querying Open Trivia Database REST API with dynamic score tracking and timed answer verification. | `Python`, `Tkinter GUI`, `REST APIs`, `OOP` |
+
+---
+
+### 🔐 Security & Systems
+
+| Directory | Project | Description | Tech Stack |
+| :--- | :--- | :--- | :--- |
+| [`/Caesar_Cipher`](./Caesar_Cipher) | **Cryptographic Shift Cipher** | Algorithmic implementation of substitution cipher supporting bidirectional encryption, custom modulo shift keys, and text sanitization. | `Python`, `Algorithms`, `Security` |
+| [`/Coffee_Machine_System`](./Coffee_Machine_System) | **Vending Machine Simulator** | Strict OOP system modeling monetary transactions, inventory state machines, coin validation, and resource threshold management. | `Python`, `OOP`, `Design Patterns` |
+
+---
+
+### 🎮 Interactive Games & Simulations
+
+| Directory | Project | Description | Tech Stack |
+| :--- | :--- | :--- | :--- |
+| [`/Snake_Game`](./Snake_Game) | **Classic Snake Arcade** | OOP implementation featuring dynamic segment linked-list rendering, collision detection algorithms, and persistent high-score logging. | `Python`, `Turtle Graphics`, `File I/O` |
+| [`/Pong_game`](./Pong_game) | **Two-Player Retro Pong** | Two-player physics simulation modeling paddle deflection angles, ball velocity acceleration vectors, and scoreboard states. | `Python`, `Turtle Graphics` |
+| [`/Turtle_Crossing`](./Turtle_Crossing) | **Frogger Arcade** | Lane-traffic simulation with incremental difficulty curves, randomized vehicular spawning, and obstacle collision boundaries. | `Python`, `Turtle Graphics` |
+| [`/US_states`](./US_states) | **US Geography Quiz** | Educational coordinate-mapping game reading geographic CSV data to plot state names at exact map coordinates upon user input. | `Python`, `Pandas`, `Turtle Graphics` |
+| [`/Hangman_Game`](./Hangman_Game) | **Hangman CLI** | Terminal-based word guessing game with dynamic ASCII visual stages and state validation. | `Python`, `ASCII Art` |
+| [`/Higher-Lower Game`](./Higher-Lower%20Game) | **Higher-Lower Celebrity Game** | Follower count comparison engine with randomized dataset queries and streak scoring. | `Python`, `Data Structures` |
+| [`/Turtles_Race`](./Turtles_Race) | **Multi-Turtle Racing Sim** | Stochastic simulation where multiple thread-like visual entities compete across a track with betting mechanics. | `Python`, `Turtle Graphics` |
+| [`/Hirst_Painting`](./Hirst_Painting) | **Generative Dot Art** | Colorgram palette extraction from Damien Hirst paintings rendering procedural 10x10 generative artwork. | `Python`, `Colorgram`, `Turtle` |
+
+---
+
+## 🛠️ Tech Stack & Dependencies
+
+```
+Languages:        Python 3.10+, SQL, Bash
+APIs & Web:       FastAPI, Flask, Requests, BeautifulSoup4, Sheety, Nutritionix
+Databases:        SQLite, Firebase Firestore
+Data & Math:      Pandas, NumPy
+GUI & Visual:     Tkinter, Turtle Graphics, Colorgram
+Cloud & DevOps:   Docker, Docker Compose, AWS EC2, systemd, GitHub Actions
+Testing:          Pytest, Unittest
+```
+
+---
+
+## 🚀 Quickstart & Setup
+
+### Prerequisites
+- Python 3.10 or higher
+- Git
+
+### 1. Clone Repository
+```bash
+git clone https://github.com/MooazPY/Pythonprojects.git
+cd Pythonprojects
+```
+
+### 2. Create Virtual Environment
+```bash
+# Windows
+python -m venv venv
+.\venv\Scripts\activate
+
+# Linux / macOS
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 3. Run Any Project
+Navigate to the directory of choice and execute the primary entrypoint:
+
+```bash
+# Example: Run Secure Password Vault
+cd Password_Manager
+python main.py
+
+# Example: Run Workout Tracking Automation
+cd ../Workout_Tracking
+python main.py
+```
+
+---
+
+## 👨‍💻 Author & Connect
+
+**Mooaz Rafaat**  
+*DevOps Engineer & Backend Developer | IT Intern at e& (Etisalat Egypt)*
+
+- 💼 **LinkedIn:** [linkedin.com/in/mooazraafat](https://www.linkedin.com/in/mooazraafat/)
+- 🐙 **GitHub:** [@MooazPY](https://github.com/MooazPY)
+- 📧 **Email:** [mooazrafaat11@gmail.com](mailto:mooazrafaat11@gmail.com)
+- 📍 **Location:** Cairo, Egypt
