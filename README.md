@@ -56,13 +56,13 @@ These are enterprise-grade containerized systems deployed to cloud infrastructur
       <td><b>🩺 Liver Cancer Detection System</b></td>
       <td>End-to-end medical diagnosis pipeline (U-Net lesion segmentation + ResNet-50 classification) handling 70,000+ CT scans with sub-2s inference response time.</td>
       <td><code>FastAPI</code> <code>PyTorch</code> <code>Firebase Firestore</code> <code>Docker</code></td>
-      <td><a href="https://github.com/MooazPY/LiverCancer-Project"><b>View Repository ➔</b></a></td>
+      <td><a href="./LiverCancerDetectionSystem"><b>View Repository ➔</b></a></td>
     </tr>
     <tr>
       <td><b>📖 Discord Quran Bot Service</b></td>
       <td>Containerized cloud background daemon serving automated daily Quran image posts and verse lookups with 99% uptime.</td>
       <td><code>discord.py</code> <code>Docker Compose</code> <code>systemd</code> <code>GitHub Actions</code></td>
-      <td><a href="https://github.com/MooazPY/quran-bot"><b>View Repository ➔</b></a></td>
+      <td><a href="./bots/quran_bot"><b>View Repository ➔</b></a></td>
     </tr>
   </tbody>
 </table>
@@ -175,4 +175,5 @@ python main.py
 - 🐙 **GitHub:** [@MooazPY](https://github.com/MooazPY)
 - 📧 **Email:** [mooazrafaat11@gmail.com](mailto:mooazrafaat11@gmail.com)
 - 📍 **Location:** Cairo, Egypt
+
 
