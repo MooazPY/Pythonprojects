@@ -7,6 +7,7 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
 [![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)](https://kubernetes.io/)
 [![AWS](https://img.shields.io/badge/AWS-EC2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white)](https://aws.amazon.com/ec2/)
 
 <br/>
@@ -121,7 +122,7 @@ APIs & Web:       FastAPI, Flask, Requests, BeautifulSoup4, Sheety, Nutritionix
 Databases:        SQLite, Firebase Firestore
 Data & Math:      Pandas, NumPy
 GUI & Visual:     Tkinter, Turtle Graphics, Colorgram
-Cloud & DevOps:   Docker, Docker Compose, AWS EC2, systemd, GitHub Actions
+Cloud & DevOps:   Kubernetes, Docker, Docker Compose, AWS EC2, systemd, GitHub Actions
 Testing:          Pytest, Unittest
 ```
 
@@ -174,3 +175,4 @@ python main.py
 - 🐙 **GitHub:** [@MooazPY](https://github.com/MooazPY)
 - 📧 **Email:** [mooazrafaat11@gmail.com](mailto:mooazrafaat11@gmail.com)
 - 📍 **Location:** Cairo, Egypt
+
